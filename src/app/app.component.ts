@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'real-time-chat';
+  title = 'covid19-information-and-question-system';
 }

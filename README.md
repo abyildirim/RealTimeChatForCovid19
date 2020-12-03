@@ -1,50 +1,27 @@
-# CS447ProjectRealTimeChat
+# Covid19InformationAndQuestionSystem
 
-Angular + Django + Socket.iO
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
 
-For runing project, make sure that following steps is valid.
+## Development server
 
-Node Js install
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
---npm --version
---npm install -g @angular/cli
+## Code scaffolding
 
-Download latest version of python using the link.https://www.python.org/downloads
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-Make sure to enable the checkbox “Added to the path” while installing python.
+## Build
 
-To check the installation of python,use the command on command prompt,
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
---python --version
+## Running unit tests
 
-Make sure that python version is greater than 3.8 like Python 3.8.6
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-To check the installation of pip, use the below command on cmd
+## Running end-to-end tests
 
--- pip --version
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-In the root folder of django_backend
+## Further help
 
-Create Virtual Enviroment 
-
--- pip install virtualenv
-
--- py -m venv myenviroment
-
-To activate the environment
-
--- myenvironment\Scripts\activate
-
--- py -m pip install --upgrade pip
-
--- pip install django
-
-# For running project
-
-Activate python enviroment in the folder CS447ProjectRealTimeChat/django_python_backend/chatapp/ 
--- python manage.py runserver
-
-In different terminal, In the folder CS447ProjectRealTimeChat/frontend/real-time-chat/
-
---ng serve
-
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
