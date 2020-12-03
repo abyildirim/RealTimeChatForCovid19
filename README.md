@@ -8,7 +8,7 @@ Install NodeJS from https://nodejs.org/en/ make sure that enviroment variable is
 
 `npm install -g @angular/cli`
 
-In project folder 
+## In project folder 
 
 `npm install`
 
