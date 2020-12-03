@@ -1,10 +1,13 @@
 # CS447ProjectRealTimeChat
+
 Angular + Django + Socket.iO
 
-npm --version
-npm install -g @angular/cli
+For runing project, make sure that following steps is valid.
 
-In the root folder of django_backend
+Node Js install
+
+--npm --version
+--npm install -g @angular/cli
 
 Download latest version of python using the link.https://www.python.org/downloads
 
@@ -20,6 +23,7 @@ To check the installation of pip, use the below command on cmd
 
 -- pip --version
 
+In the root folder of django_backend
 
 Create Virtual Enviroment 
 
@@ -31,6 +35,16 @@ To activate the environment
 
 -- myenvironment\Scripts\activate
 
-py -m pip install --upgrade pip
+-- py -m pip install --upgrade pip
 
-pip install django
+-- pip install django
+
+# For running project
+
+Activate python enviroment in the folder CS447ProjectRealTimeChat/django_python_backend/chatapp/ 
+-- python manage.py runserver
+
+In different terminal, In the folder CS447ProjectRealTimeChat/frontend/real-time-chat/
+
+--ng serve
+
