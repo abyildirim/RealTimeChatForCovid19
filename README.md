@@ -4,9 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Install NodeJS from https://nodejs.org/en/ make sure that enviroment variable is setted.
 
---npm --version
+`npm --version`
 
---npm install -g @angular/cli
+`npm install -g @angular/cli`
 
 ## Development server
 
