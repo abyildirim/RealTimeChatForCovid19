@@ -10,7 +10,7 @@ Install NodeJS from https://nodejs.org/en/ make sure that enviroment variable is
 
 In project folder 
 
-`npm instal`
+`npm install`
 
 
 ## Backend server
