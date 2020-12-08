@@ -1,0 +1,107 @@
+<div class="desktopSettings">
+  <div class="topPart" fxLayout="row" fxLayoutAlign="center">
+    <div>
+      <mat-card class="card-container">Covid 19 Home Page Name</mat-card>
+    </div>
+  </div>
+
+  <div class="middleSection">
+    <div class="content">
+      <form [formGroup]="personalform" (ngSubmit)="saveForm()" appearance="standard">
+        <mat-form-field>
+          <div class="">
+
+            <mat-label>
+              FirstName:
+              <label>
+                <input matInput type="text" formControlName="name"/>
+              </label>
+            </mat-label>
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <div class="">
+            <mat-label>
+              LastName:
+              <input matInput type="text" formControlName="surname">
+            </mat-label>
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <div class="">
+            <mat-label>
+              Email:
+              <input matInput type="text" formControlName="email">
+            </mat-label>
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <div class="">
+            <mat-label>
+              Age:
+              <input matInput type="text" formControlName="age">
+            </mat-label>
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <div class="">
+            <mat-label>
+              Phonenumber:
+              <input matInput type="text" formControlName="phonenumber">
+            </mat-label>
+          </div>
+        </mat-form-field>
+        <br>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Gender</mat-label>
+            <mat-select matInput formControlName="gender">
+              <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                {{gender.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <br>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Type of User</mat-label>
+            <mat-select matInput formControlName="doctorOrPatient">
+              <mat-option *ngFor="let dp of doctorOrPatient" [value]="dp.value">
+                {{dp.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <br>
+        <mat-form-field>
+          <div class="">
+            <mat-label> Birthdate
+              <input matInput type="date" formControlName="birthdate" placeholder="Pick a date">
+              <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
+              <mat-datepicker #birthdate></mat-datepicker>
+            </mat-label>
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-card-actions>
+          <button mat-raised-button type="submit" [disabled]="formDisabled()">Submit</button>
+        </mat-card-actions>
+      </form>
+    </div>
+  </div>
+  <div class="middleSection2">
+    <div fxLayoutAlign="center">
+      <button mat-button style="color: black; background: #f8f9fa">
+        Are you hasta!!?
+      </button>
+      <button mat-button style="color: black; background: #f8f9fa">If you are ready start
+        Are you Doctor?
+      </button>
+    </div>
+  </div>
+</div>
