@@ -3,10 +3,12 @@ import {Routes, RouterModule} from '@angular/router';
 import {WellComePageComponent} from './well-come-page/well-come-page.component';
 import {DocktorComponent} from './docktor/docktor.component';
 import {HastaComponent} from './hasta/hasta.component';
+import {HomePageComponent} from './home-page/home-page.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: WellComePageComponent},
+  {path: 'home', component: HomePageComponent},
+  {path: 'sign-up', component: WellComePageComponent},
   {path: 'doctor', component: DocktorComponent},
   {path: 'hasta', component: HastaComponent},
 

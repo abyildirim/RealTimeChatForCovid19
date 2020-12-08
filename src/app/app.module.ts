@@ -24,6 +24,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { HastaComponent } from './hasta/hasta.component';
 import { DocktorComponent } from './docktor/docktor.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     WellComePageComponent,
     DialogElementsExampleDialog,
     HastaComponent,
-    DocktorComponent
+    DocktorComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
