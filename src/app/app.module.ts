@@ -33,7 +33,9 @@ import { DoctorRegistrationComponent } from './doctor-registration/doctor-regist
     DialogElementsExampleDialog,
     HomePageComponent,
     DoctorSelectionComponent,
-    DoctorRegistrationComponent
+    DoctorRegistrationComponent,
+    HomePageComponent,
+    ChatRoomComponentsComponent
   ],
   imports: [
     BrowserModule,

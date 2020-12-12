@@ -11,6 +11,8 @@ const routes: Routes = [
   {path: 'sign-up', component: WellComePageComponent},
   {path: 'doctor/registeration', component: DoctorRegistrationComponent},
   {path: 'patient/doctor-selection', component: DoctorSelectionComponent},
+  {path: 'signup', component: SingUpForDoctorUsersComponent},
+  {path: 'chatroom', component: ChatRoomComponentsComponent},
 
 ];
 

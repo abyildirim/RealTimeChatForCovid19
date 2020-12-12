@@ -12,4 +12,11 @@ export class DoctorRegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  singIn(): void {
+    this.router.navigate(['/doctor']);
+  }
+
+  singUp(): void {
+    this.router.navigate(['/signup']);
+  }
 }

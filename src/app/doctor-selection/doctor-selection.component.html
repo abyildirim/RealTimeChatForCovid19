@@ -1,1 +1,11 @@
 <p>doctor-selection works!</p>
+<div class="row">
+  <div class="well" style="height:200px; padding:15px;">
+    Selam:
+    <div *ngFor="let item of allRooms">
+      <button (click)="gotoChatRoom(item.user, item.room)">{{item.user}}{{item.room}}</button>
+      <br>
+    </div>
+  </div>
+</div>
+
