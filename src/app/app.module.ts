@@ -21,11 +21,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
-import { HastaComponent } from './hasta/hasta.component';
-import { DocktorComponent } from './docktor/docktor.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { HomePageComponent } from './home-page/home-page.component';
-import { DoctorSelectionComponentComponent } from './doctor-selection-component/doctor-selection-component.component';
 import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
 import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 
@@ -34,10 +31,7 @@ import { DoctorRegistrationComponent } from './doctor-registration/doctor-regist
     AppComponent,
     WellComePageComponent,
     DialogElementsExampleDialog,
-    HastaComponent,
-    DocktorComponent,
     HomePageComponent,
-    DoctorSelectionComponentComponent,
     DoctorSelectionComponent,
     DoctorRegistrationComponent
   ],
