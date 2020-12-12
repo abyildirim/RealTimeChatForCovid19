@@ -21,19 +21,19 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
-import { HastaComponent } from './hasta/hasta.component';
-import { DocktorComponent } from './docktor/docktor.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { HomePageComponent } from './home-page/home-page.component';
+import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
+import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WellComePageComponent,
     DialogElementsExampleDialog,
-    HastaComponent,
-    DocktorComponent,
-    HomePageComponent
+    HomePageComponent,
+    DoctorSelectionComponent,
+    DoctorRegistrationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,17 +1,15 @@
 <div class="desktopSettings">
-  <div class="topPart" fxLayout="row" fxLayoutAlign="center">
-    <div>
-      <mat-card class="card-container">Covid 19 Home Page Name</mat-card>
+  <img class = "background-img" src="assets/img/home-bg.png">
+  <div class="container-div">
+    <div class="banner-div" fxLayout="row" fxLayoutAlign="center">
+        <img class = "banner" src="assets/img/home-banner.png">
     </div>
-  </div>
-
-  <div class="middleSection" fxLayout="row" fxLayoutAlign="space-around center" >
-    <div fxLayoutGap="20px">
-      <button mat-button style="color: black; background: gray" (click)="hasta()">
-        Are you hasta!!?
-      </button>
-      <button mat-button style="color: black; background: gray" (click)="doctor()">If you are ready start, Doctor?
-      </button>
+  
+    <div fxLayout="row" fxLayoutAlign="space-around center" >
+      <div fxLayoutGap="50px">
+        <button class="selection-button button-radius-left" (click)="routePatient()">Patient</button>
+        <button class="selection-button button-radius-right" (click)="routeDoctor()">Doctor</button>
+      </div>
     </div>
   </div>
 </div>
