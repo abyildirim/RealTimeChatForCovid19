@@ -12,11 +12,11 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  doctor(): void {
-    this.router.navigate(['/doctor']);
+  routeDoctor(): void {
+    this.router.navigate(['/doctor/registeration']);
   }
-  hasta(): void {
-    this.router.navigate(['/hasta']);
+  routePatient(): void {
+    this.router.navigate(['/patient/doctor-selection']);
   }
 
 }

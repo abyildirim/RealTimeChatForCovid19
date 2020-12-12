@@ -25,6 +25,9 @@ import { HastaComponent } from './hasta/hasta.component';
 import { DocktorComponent } from './docktor/docktor.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { HomePageComponent } from './home-page/home-page.component';
+import { DoctorSelectionComponentComponent } from './doctor-selection-component/doctor-selection-component.component';
+import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
+import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { HomePageComponent } from './home-page/home-page.component';
     DialogElementsExampleDialog,
     HastaComponent,
     DocktorComponent,
-    HomePageComponent
+    HomePageComponent,
+    DoctorSelectionComponentComponent,
+    DoctorSelectionComponent,
+    DoctorRegistrationComponent
   ],
   imports: [
     BrowserModule,
