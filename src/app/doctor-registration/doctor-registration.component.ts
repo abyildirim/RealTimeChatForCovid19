@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-doctor-registration',
@@ -7,16 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DoctorRegistrationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit(): void {
   }
 
   singIn(): void {
-    this.router.navigate(['/doctor']);
+    this.router.navigate(['doctor/registration/sing-up']);
   }
 
   singUp(): void {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['doctor/registration/sing-up']);
   }
 }

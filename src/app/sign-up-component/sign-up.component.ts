@@ -4,14 +4,14 @@ import {Subscription} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {PersonalInfoFormService} from '../services/covid.service';
+import {DoctorRoomService} from '../services/covid.service';
 
 @Component({
   selector: 'app-well-come-page',
-  templateUrl: './well-come-page.component.html',
-  styleUrls: ['./well-come-page.component.css']
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
 })
-export class WellComePageComponent implements OnInit, OnChanges {
+export class SignUpComponent implements OnInit, OnChanges {
 
   submitted = false;
 
@@ -32,12 +32,12 @@ export class WellComePageComponent implements OnInit, OnChanges {
   private subscription = new Subscription();
 
   onChange: any = (_: PersonalInfoForm) => {
-  };
+  }
   onTouch: any = () => {
-  };
+  }
 
 
-  constructor(private fb: FormBuilder, private router: Router, public dialog: MatDialog, private service: PersonalInfoFormService) {
+  constructor(private fb: FormBuilder, private router: Router, public dialog: MatDialog, private service: DoctorRoomService) {
   }
 
   ngOnInit(): void {
@@ -69,7 +69,7 @@ export class WellComePageComponent implements OnInit, OnChanges {
   }
 
   openDialog(): void {
-    this.dialog.open(DialogElementsExampleDialog);
+    this.dialog.open(DialogElementsExampleDialogComponent);
   }
 
   formDisabled(): boolean {
@@ -91,8 +91,8 @@ export interface PersonalInfoForm {
 
 
 @Component({
-  selector: 'dialog-for-wrong-form',
+  selector: 'app-dialog-for-wrong-form',
   templateUrl: './dialog-for-wrong-form.html',
 })
-export class DialogElementsExampleDialog {
+export class DialogElementsExampleDialogComponent {
 }

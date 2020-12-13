@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChatRoomService} from '../services/chat-room.service';
 import {Router} from '@angular/router';
 import {DoctorRoomService} from '../services/covid.service';
@@ -10,9 +10,16 @@ import {DoctorRoomService} from '../services/covid.service';
 })
 export class DoctorSelectionComponent implements OnInit {
 
-  constructor(private router: Router, private doctorRoomService: DoctorRoomService) { }
+  allRooms: any;
+
+  constructor(private router: Router, private doctorRoomService: DoctorRoomService) {
+  }
 
   ngOnInit(): void {
+    this.doctorRoomService.getAllDoctorRooms().subscribe(
+      (result) => this.allRooms = result,
+      (error) => console.log(error)
+    );
   }
 
   gotoChatRoom(user: string, room: string): void {

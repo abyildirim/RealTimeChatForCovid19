@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {DialogElementsExampleDialog, WellComePageComponent} from './well-come-page/well-come-page.component';
+import {DialogElementsExampleDialogComponent, SignUpComponent} from './sign-up-component/sign-up.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
@@ -25,17 +25,20 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { HomePageComponent } from './home-page/home-page.component';
 import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
 import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
+import {ChatRoomComponentsComponent} from './chat-room-components/chat-room-components.component';
+import { SignInComponent } from './sign-in-component/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WellComePageComponent,
-    DialogElementsExampleDialog,
+    SignUpComponent,
+    DialogElementsExampleDialogComponent,
     HomePageComponent,
     DoctorSelectionComponent,
     DoctorRegistrationComponent,
     HomePageComponent,
-    ChatRoomComponentsComponent
+    ChatRoomComponentsComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
