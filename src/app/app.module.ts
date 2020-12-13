@@ -20,7 +20,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { HomePageComponent } from './home-page/home-page.component';
 import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
@@ -58,6 +58,7 @@ import { SignInComponent } from './sign-in-component/sign-in.component';
     MatGridListModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
