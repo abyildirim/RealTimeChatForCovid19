@@ -5,8 +5,9 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class DoctorRoomService {
-  private baseURL = 'http://127.0.0.1:3000/api/';
+  private baseURL = 'http://localhost:3000/api/';
   private endpoint = this.baseURL + 'doctorRoomList';
+  private endpointForUserID = this.baseURL + 'userIDForRandom';
   private headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });
@@ -23,6 +24,10 @@ export class DoctorRoomService {
   // tslint:disable-next-line:typedef
   getAllDoctorRooms() {
     return this.http.get(this.endpoint, {headers: this.headers});
+  }
+  // tslint:disable-next-line:typedef
+  getUserID() {
+    return this.http.get(this.endpointForUserID, {headers: this.headers});
   }
 
 }

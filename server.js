@@ -1,34 +1,32 @@
 var app = require('express')();
 var http = require('http').createServer(app);
-var io =  require('socket.io')(http, {cors: {origin: "*" }});
-
-const doctorUsers = [];
-const webSocNumber = [];
-webSocNumber.push({user: 'Canan Karatay', room: '1'});
-webSocNumber.push({user: 'Canan Hoca', room: '2'});
-webSocNumber.push({user: 'Canan Doktor', room: '3'});
-
-function SearchminRoomId(){
-  var foundmin = false;
-	var min=1;
-  while(true){
-    for(i=0; i<webSocNumber.length; i++){
-      if(webSocNumber[i].room === 1) continue;
-      else if(i===webSocNumber-1) foundmin = true;
-    }
-    if(foundmin) break;
-    else min++;
+var io = require('socket.io')(http, {
+  cors: {
+    credentials: true,
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST"]
   }
-  return min;
+});
+
+const port = process.env.PORT || 3000;
+var userIDList = [];
+
+for (let i = 0; i < 1000; i++) {
+  userIDList.push(i);
 }
 
+var users = []; //Active user for patient
+const dockerListorDockerSocketList = [];
+dockerListorDockerSocketList.push({doktorname: 'Canan Karatay', room: '1'});
+dockerListorDockerSocketList.push({doktorname: 'Canan Hoca', room: '2'});
+dockerListorDockerSocketList.push({doktorname: 'Canan Doktor', room: '3'});
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/src/index.html');
 });
 
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
@@ -36,40 +34,123 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/doctorRoomList', (req, res) => {
-  res.json(webSocNumber);
+  res.json(dockerListorDockerSocketList);
+});
+
+app.get('/api/userIDForRandom', (req, res) => {
+  res.json(userIDList.pop());
 });
 
 app.post('/api/createNewDoctorUser', (req, res) => {
   const user = req.body.user;
-  doctorUsers.push(user);
+  dockerListorDockerSocketList.push(user);
   res.json("new doctor added successfully")
 });
+io.on("connection", (socket) => {
+  console.log("new connection");
 
-io.on('connection', (socket) => {
-  console.log('connection OK');
-  socket.on('cli_init', (message) => {
-    console.log(message);
-    socket.join(webSocNumber[message-1].room);
-    io.to(socket).emit('cli_initcomplete', $(message));
+  socket.on("join", ({username, room}) => {
+    console.log('some arrive' + username + room);
+    //same user name cannot enter
+    const {user} = addUser({id: socket.id, username, room});
+
+    socket.join(user.room);
+    socket.emit("message", generatemsg("Admin ,Welcome"));
+    socket.broadcast.to(user.room).emit("message", generatemsg(`Admin ${user.username} has joined!`));
+
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUserInRoom(user.room)
+    });
   });
 
-  socket.on('doc_init', (message) => {
-    for(i=0;i<doctorUsers.length;i++){
-      if(message===doctorUsers[i]){
-        const index = webSocNumber.indexOf('undefined');
-        if(index===-1) webSocNumber.push({user: doctorUsers[i], room: webSocNumber.length});
-        else webSocNumber.fill({user: doctorUsers[i], room: index+1}, index, index+1);
-        socket.join(webSocNumber[i].room)
-        break;
-        }
-      else if(i===doctorUsers.length-1){
-        io.to(socket).emit("error", "doctor 404")
-      }
+  socket.on("message", (msg) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit("message", generatemsg(user.username, msg.message));
+    console.log('message working');
+  });
+
+  socket.on("disconnect", () => {
+    const user = removeUser(socket.id);
+    console.log(user);
+    if (user) {
+      io.to(user.room).emit("message", generatemsg(`Admin ${user.username} A user  has left`));
+
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUserInRoom(user.room)
+      })
     }
-  });
-  socket.on()
+
+  })
 });
 
-http.listen(3000, () => {
-  console.log('listening on *:3000');
+const newuser = [];
+const addUser = ({id, username, room}) => {
+  //clean the data
+
+  username = username.toLowerCase();
+  room = room.toLowerCase();
+
+  //vlidate data
+  if (!username || !room) {
+    return {
+      error: 'Username and room are required!'
+    }
+  }
+
+  //check for existing users
+  const existingUser = users.find((user) => {
+    return user.room === room && user.username === username;
+  });
+
+  //va;idate username
+  if (existingUser) {
+    return {
+      error: "username iss already used"
+    }
+  }
+
+  //store user
+  const user = {id, username, room};
+  users.push(user);
+  return {user}
+};
+
+
+const removeUser = (id) => {
+  const index = users.findIndex((user) => {
+    return user.id === id
+  });
+  if (index !== -1) {
+    return users.splice(index, 1)[0]
+  }
+};
+
+const getUser = (id) => {
+  return users.find((user) => {
+    return user.id === id
+  })
+};
+
+const getUserInRoom = (room) => {
+  const u = [];
+  users.filter((user) => {
+    user.room === room
+  });
+  console.log(users);
+  return users
+
+};
+
+const generatemsg = (username, text) => {
+  return {
+    username: username,
+    text: text,
+    createdAt: new Date().getTime()
+  }
+};
+
+http.listen(port, () => {
+  console.log('listening on *:' + port);
 });

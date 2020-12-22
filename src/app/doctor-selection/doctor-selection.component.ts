@@ -9,7 +9,7 @@ import {DoctorRoomService} from '../services/covid.service';
   styleUrls: ['./doctor-selection.component.css']
 })
 export class DoctorSelectionComponent implements OnInit {
-
+  userID: any;
   allRooms: any;
 
   constructor(private router: Router, private doctorRoomService: DoctorRoomService) {
@@ -20,10 +20,14 @@ export class DoctorSelectionComponent implements OnInit {
       (result) => this.allRooms = result,
       (error) => console.log(error)
     );
+    this.doctorRoomService.getUserID().subscribe(
+      ( result ) => this.userID = result,
+      (error => console.log(error))
+    );
   }
 
   gotoChatRoom(user: string, room: string): void {
-    this.router.navigate(['/chatroom'], {queryParams: {userId: user, roomID: room}});
+    this.router.navigate(['/chatroom'], {queryParams: {userId: this.userID, roomID: room}});
   }
 }
 

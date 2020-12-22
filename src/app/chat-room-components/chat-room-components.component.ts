@@ -9,17 +9,18 @@ import {ActivatedRoute} from '@angular/router';
   providers: [ChatRoomService]
 })
 export class ChatRoomComponentsComponent {
-  connectedServer = false;
+  connectedServer = true;
   user: string;
   room: string;
   messageText: string;
-  messageArray: Array<{ user: string, message: string }> = [];
+  messageArray: Array<{ username: string, text: string, createdAt: Date }> = [];
 
   constructor(private roomService: ChatRoomService, private route: ActivatedRoute) {
 
     this.user = this.route.snapshot.queryParamMap.get('userId');
     this.room = this.route.snapshot.queryParamMap.get('roomID');
-    this.roomService.forNewUserJoinToChatRoom(this.room)
+    console.log(this.room);
+    this.roomService.forNewUserJoinToChatRoom()
       .subscribe(data => this.messageArray.push(data));
 
 
@@ -28,21 +29,24 @@ export class ChatRoomComponentsComponent {
 
     this.roomService.takenNewMessageFromOtherUsers()
       .subscribe(data => this.messageArray.push(data));
+
+    this.join();
   }
 
   // tslint:disable-next-line:typedef
   join() {
-    this.roomService.enterChatRoom({user: this.user, room: this.room});
+    this.roomService.joinChatRoom({username: this.user, room: this.room});
   }
 
   // tslint:disable-next-line:typedef
   leave() {
-    this.roomService.leaveRoom({user: this.user, room: this.room});
+    this.roomService.leaveRoom({username: this.user, room: this.room});
   }
 
   // tslint:disable-next-line:typedef
   sendMessage() {
-    this.roomService.sendMessageToAllUsers({user: this.user, room: this.room, message: this.messageText});
+    console.log(this.messageText);
+    this.roomService.sendMessageToAllUsers({username: this.user, room: this.room, message: this.messageText});
   }
 
 }
