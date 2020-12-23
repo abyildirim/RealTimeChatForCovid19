@@ -1,27 +1,28 @@
 import {Injectable} from '@angular/core';
-import * as io from 'socket.io-client';
 import {Observable} from 'rxjs';
+import {io} from 'socket.io-client';
 
 @Injectable()
 export class ChatRoomService {
-
+  private SOCKET_ENDPOINT = 'http://localhost:3000';
   private socket; // io('http://localhost:3000/rooms');
 
   private userID: string;
   private roomId: string;
 
   constructor() {
+
   }
 
   // tslint:disable-next-line:typedef
-  enterChatRoom(data) {
+  joinChatRoom(data) {
     this.socket.emit('join', data);
   }
 
   // tslint:disable-next-line:typedef
-  forNewUserJoinToChatRoom(roomNumber: string) {
-    this.socket = io('http://localhost:3000/rooms', {query: {roomNumber}});
-    const observable = new Observable<{ user: string, message: string }>(observer => {
+  forNewUserJoinToChatRoom() {
+    this.socket = io(this.SOCKET_ENDPOINT);
+    const observable = new Observable<{ username: string, text: string, createdAt: Date}>(observer => {
       this.socket.on('new user joined', (data) => {
         observer.next(data);
       });
@@ -35,7 +36,7 @@ export class ChatRoomService {
 
   // tslint:disable-next-line:typedef
   leftChatRoomByUserActions() {
-    const observable = new Observable<{ user: string, message: string }>(observer => {
+    const observable = new Observable<{ username: string, text: string, createdAt: Date }>(observer => {
       this.socket.on('left room', (data) => {
         observer.next(data);
       });
@@ -54,8 +55,8 @@ export class ChatRoomService {
   // tslint:disable-next-line:typedef
   takenNewMessageFromOtherUsers() {
     // tslint:disable-next-line:ban-types
-    const observable = new Observable<{ user: string, message: string }>(observer => {
-      this.socket.on('new message', (data) => {
+    const observable = new Observable<{ username: string, text: string, createdAt: Date}>(observer => {
+      this.socket.on('message', (data) => {
         observer.next(data);
       });
       return () => {
