@@ -1,7 +1,8 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {DoctorRoomService} from "../services/covid.service";
+import {DoctorRoomService} from '../services/covid.service';
+
 
 @Component({
   selector: 'app-sign-in-component',

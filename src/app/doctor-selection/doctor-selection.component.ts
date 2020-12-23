@@ -35,4 +35,3 @@ class DoctorRoomType {
   user: string;
   room: string;
 }
-
