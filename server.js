@@ -104,7 +104,8 @@ app.post('/api/checkRoomIsActive', jsonParser, (req, res, next) => {
         email = key;
       }
     }
-    if (activeDoctorListForWiew.includes(email)) {
+    var index = activeDoctorListForWiew.findIndex(x => x.email === email);
+    if (index !== -1) {
       res.json("true");
     } else {
       res.json("false");
