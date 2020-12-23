@@ -13,10 +13,10 @@
   "dependencies": {
     "@angular/animations": "~10.1.5",
     "@angular/cdk": "10.2.2",
-    "@angular/flex-layout": "latest",
     "@angular/common": "~10.1.5",
     "@angular/compiler": "~10.1.5",
     "@angular/core": "~10.1.5",
+    "@angular/flex-layout": "latest",
     "@angular/forms": "~10.1.5",
     "@angular/material": "10.1.2",
     "@angular/platform-browser": "~10.1.5",
@@ -24,8 +24,9 @@
     "@angular/router": "~10.1.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.6",
-    "rxjs": "~6.6.0",
-    "socket.io": "^3.0.3",
+    "rxjs": "^6.6.3",
+    "socket.io": "^3.0.4",
+    "socket.io-client": "^3.0.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

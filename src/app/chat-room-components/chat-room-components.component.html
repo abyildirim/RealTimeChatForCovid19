@@ -14,7 +14,7 @@
   <div class="row">
     <div class="well" style="height:200px; padding:15px;">
       <div *ngFor="let item of messageArray">
-        <span><strong>{{item.user}} : </strong> {{item.message}}</span>
+        <span><strong>{{item.username}} : </strong> {{item.text}}</span>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
       <input type="text" class="form-control" [(ngModel)]="messageText">
     </div>
     <div class="col-sm-2">
-      <button type="button" class="btn btn-success pull-right" (click)="sendMessage()">Send</button>
+      <button type="button" class="btn btn-success pull-right" (click)="sendMessage()">Send Message</button>
     </div>
   </div>
 </div>
