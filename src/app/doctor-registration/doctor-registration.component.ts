@@ -15,7 +15,7 @@ export class DoctorRegistrationComponent implements OnInit {
   }
 
   singIn(): void {
-    this.router.navigate(['doctor/registration/sing-up']);
+    this.router.navigate(['doctor/registration/sign-in']);
   }
 
   singUp(): void {

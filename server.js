@@ -294,13 +294,13 @@ let newDoctor = new Doctor({
 });
 dictForChatRoomAndDoctorRalatedFields[newDoctor._email] = 1;
 let newDoctor2 = new Doctor({
-  name: "nezih",
-  surname: "sunman",
-  email: "nezih.sunmann@ozu.edu.tr",
-  age: "21",
+  name: "ece",
+  surname: "nigiz",
+  email: "ece.nigiz@ozu.edu.tr",
+  age: "24",
   phonenumber: "53325981",
   birthdate: "17.06",
-  gender: "male",
+  gender: "female",
   doctorArea: "Dahiliye"
 });
 dictForChatRoomAndDoctorRalatedFields[newDoctor2._email] = 2;

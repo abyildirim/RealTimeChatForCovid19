@@ -9,7 +9,7 @@ import {DoctorRoomService} from '../services/covid.service';
   styleUrls: ['./doctor-selection.component.css']
 })
 export class DoctorSelectionComponent implements OnInit {
-
+  userID: any;
   allRooms: any;
 
   constructor(private router: Router, private doctorRoomService: DoctorRoomService) {
@@ -18,12 +18,16 @@ export class DoctorSelectionComponent implements OnInit {
   ngOnInit(): void {
     this.doctorRoomService.getAllDoctorRooms().subscribe(
       (result) => this.allRooms = result,
-      (error) => console.log(error)
+      (error) => this.router.navigate(['home'])
+    );
+    this.doctorRoomService.getUserID().subscribe(
+      (result) => this.userID = result,
+      (error => this.router.navigate(['home']))
     );
   }
 
   gotoChatRoom(user: string, room: string): void {
-    this.router.navigate(['/chatroom'], {queryParams: {userId: user, roomID: room}});
+    this.router.navigate(['/chatroom'], {queryParams: {email: '-', userId: this.userID, roomID: room}});
   }
 }
 
@@ -31,4 +35,3 @@ class DoctorRoomType {
   user: string;
   room: string;
 }
-
