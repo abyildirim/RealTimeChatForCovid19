@@ -11,7 +11,7 @@ export class ChatRoomService {
   private roomId: string;
 
   constructor() {
-    this.socket = io(this.SOCKET_ENDPOINT);
+
   }
 
   // tslint:disable-next-line:typedef
@@ -21,6 +21,7 @@ export class ChatRoomService {
 
   // tslint:disable-next-line:typedef
   forNewUserJoinToChatRoom() {
+    this.socket = io(this.SOCKET_ENDPOINT);
     const observable = new Observable<{ username: string, text: string, createdAt: Date}>(observer => {
       this.socket.on('new user joined', (data) => {
         observer.next(data);
@@ -35,7 +36,7 @@ export class ChatRoomService {
 
   // tslint:disable-next-line:typedef
   leftChatRoomByUserActions() {
-    const observable = new Observable<{ username: string, text: string, createdAt:Date }>(observer => {
+    const observable = new Observable<{ username: string, text: string, createdAt: Date }>(observer => {
       this.socket.on('left room', (data) => {
         observer.next(data);
       });

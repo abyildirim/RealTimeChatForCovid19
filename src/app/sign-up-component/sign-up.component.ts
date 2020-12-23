@@ -17,16 +17,16 @@ export class SignUpComponent implements OnInit, OnChanges {
 
   genders: any = [{name: 'male', value: 0}, {name: 'female', value: 1}];
   doctorOrPatient: any = [{name: 'doctor', value: 0}, {name: 'hasta', value: 1}];
-
+  doctorArea: any = [{name: 'dahiliye', value: 'dahiliye'}];
   personalform = this.fb.group({
     name: ['', Validators.required],
-    surname: [''],
-    email: [''],
-    age: [''],
-    phonenumber: [''],
-    birthdate: [''],
-    gender: [''],
-    doctorOrPatient: [''],
+    surname: ['', Validators.required],
+    email: ['', Validators.required],
+    age: ['', Validators.required],
+    phonenumber: ['', Validators.required],
+    birthdate: ['', Validators.required],
+    gender: ['', Validators.required],
+    doctorArea: ['', Validators.required],
   });
 
   private subscription = new Subscription();
@@ -56,16 +56,31 @@ export class SignUpComponent implements OnInit, OnChanges {
 
   saveForm(): void {
     console.log('submitted');
+    if (this.personalform.invalid) {
+      return;
+    }
     // TODO: save before summit to server js
     /*this.service.saveFormToDataBase(this.personalform.value).subscribe(
       (result: HttpResponse<any>) => this.router.navigate(['/doctororstudent']),
       error => this.openDialog()
     );*/
-    if (this.personalform.get('doctorOrPatient').value === 0) {
+
+    this.service.saveDoctorToSystem(this.personalform.getRawValue()).subscribe(
+      (result) => this.router.navigate(['/chatroom'], {
+        queryParams: {
+          email: this.personalform.get('email'),
+          userId: this.personalform.get('name').value + ' ' + this.personalform.get('surname').value,
+          roomID: result
+        }
+      }),
+      (error) => console.log(error)
+    );
+
+    /*if (this.personalform.get('doctorOrPatient').value === 0) {
       this.router.navigate(['/doctor']);
     } else if (this.personalform.get('doctorOrPatient').value === 1) {
       this.router.navigate(['/hasta']);
-    }
+    }*/
   }
 
   openDialog(): void {
@@ -79,14 +94,14 @@ export class SignUpComponent implements OnInit, OnChanges {
 }
 
 export interface PersonalInfoForm {
-  firstName: string;
-  lastName: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  province: string;
-  country: string;
-  postalCode: string;
+  name: string;
+  surname: string;
+  email: string;
+  age: string;
+  phonenumber: string;
+  birthdate: string;
+  gender: string;
+  doctorArea: string;
 }
 
 

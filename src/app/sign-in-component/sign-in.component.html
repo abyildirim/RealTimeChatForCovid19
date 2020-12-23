@@ -1,1 +1,34 @@
-<p>sign-in-component works!</p>
+<form [formGroup]="signInForm" (ngSubmit)="saveForm()" appearance="standard">
+  <mat-form-field>
+    <div class="">
+      <mat-label>
+        FirstName:
+        <label>
+          <input matInput type="text" formControlName="name"/>
+        </label>
+      </mat-label>
+    </div>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <div class="">
+      <mat-label>
+        LastName:
+        <input matInput type="text" formControlName="surname">
+      </mat-label>
+    </div>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <div class="">
+      <mat-label>
+        Email:
+        <input matInput type="text" formControlName="email">
+      </mat-label>
+    </div>
+  </mat-form-field>
+
+  <mat-card-actions>
+    <button mat-raised-button type="submit">Submit</button>
+  </mat-card-actions>
+</form>

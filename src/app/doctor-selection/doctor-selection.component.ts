@@ -18,16 +18,16 @@ export class DoctorSelectionComponent implements OnInit {
   ngOnInit(): void {
     this.doctorRoomService.getAllDoctorRooms().subscribe(
       (result) => this.allRooms = result,
-      (error) => console.log(error)
+      (error) => this.router.navigate(['home'])
     );
     this.doctorRoomService.getUserID().subscribe(
-      ( result ) => this.userID = result,
-      (error => console.log(error))
+      (result) => this.userID = result,
+      (error => this.router.navigate(['home']))
     );
   }
 
   gotoChatRoom(user: string, room: string): void {
-    this.router.navigate(['/chatroom'], {queryParams: {userId: this.userID, roomID: room}});
+    this.router.navigate(['/chatroom'], {queryParams: {email: '-', userId: this.userID, roomID: room}});
   }
 }
 
