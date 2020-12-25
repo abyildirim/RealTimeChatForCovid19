@@ -1,4 +1,4 @@
-# node-js-getting-started
+# RealTimeChatForCovid19
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
