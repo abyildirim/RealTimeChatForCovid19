@@ -28,18 +28,17 @@ export class ChatRoomComponentsComponent {
       console.log("DOCTOR TRUE:" + this.doctorEmail);
       this.doctorOrNot = true;
     }
-    if (!this.doctorOrNot){
+    if (!this.doctorOrNot) {
       this.service.checkRoomActiveOrNot(this.room).subscribe(
         (result) => {
           this.checkResult(result);
         },
         (error) => {
           console.log("ROOM: " + this.room)
-          // this.router.navigate(['patient/doctor-selection']); 
-      }
+          // this.router.navigate(['patient/doctor-selection']);
+        }
       );
-    }
-    else{
+    } else {
       this.checkResult("true");
     }
   }
@@ -71,6 +70,7 @@ export class ChatRoomComponentsComponent {
   // tslint:disable-next-line:typedef
   leave() {
     this.roomService.leaveRoom({username: this.user, room: this.room, email: this.doctorEmail});
+    this.router.navigate(['home']);
   }
 
   // tslint:disable-next-line:typedef
@@ -82,6 +82,7 @@ export class ChatRoomComponentsComponent {
       email: this.doctorEmail,
       message: this.messageText
     });
+    this.messageText = '';
   }
 
 }
