@@ -466,7 +466,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       __webpack_require__(
-      /*! C:\Users\Nezih Sunman\Desktop\CS447Project\node-js-getting-started\node_modules\@angular-devkit\build-angular\src\webpack\es5-polyfills.js */
+      /*! D:\LMS\3rd Grade 2nd Semester\CS 447\Project\RealTimeChatForCovid19\node_modules\@angular-devkit\build-angular\src\webpack\es5-polyfills.js */
       "voQr");
 
       __webpack_require__(
@@ -474,7 +474,7 @@
       "R0gw");
 
       module.exports = __webpack_require__(
-      /*! C:\Users\Nezih Sunman\Desktop\CS447Project\node-js-getting-started\src\polyfills.ts */
+      /*! D:\LMS\3rd Grade 2nd Semester\CS 447\Project\RealTimeChatForCovid19\src\polyfills.ts */
       "hN/g");
       /***/
     },

@@ -1,5 +1,6 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 import {Subscription} from 'rxjs';
 import {DoctorRoomService} from '../services/covid.service';
 
@@ -21,7 +22,7 @@ export class SignInComponent implements OnInit, OnChanges {
   onChange: any = (_: SignInForm) => {
   }
 
-  constructor(private fb: FormBuilder, private service: DoctorRoomService) {
+  constructor(private fb: FormBuilder, private service: DoctorRoomService, private router: Router) {
   }
 
   ngOnChanges(simpleChanges: SimpleChanges): void {
@@ -52,6 +53,7 @@ export class SignInComponent implements OnInit, OnChanges {
 
   // tslint:disable-next-line:typedef
   checkSignInResponse(value) {
+    this.router.navigate(['/chatroom'], {queryParams: {email:this.signInForm.getRawValue().email, userId: '-', roomID: value}});
     console.log(value);
   };
 }

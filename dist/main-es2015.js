@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Nezih Sunman\Desktop\CS447Project\node-js-getting-started\src\main.ts */"zUnb");
+module.exports = __webpack_require__(/*! D:\LMS\3rd Grade 2nd Semester\CS 447\Project\RealTimeChatForCovid19\src\main.ts */"zUnb");
 
 
 /***/ }),
@@ -149,7 +149,8 @@ __webpack_require__.r(__webpack_exports__);
 
 class ChatRoomService {
     constructor() {
-        this.SOCKET_ENDPOINT = 'http://localhost:5000';
+        this.SOCKET_ENDPOINT = 'https://cs447covidchatservice.herokuapp.com/';
+        this.Socket_PORT_ForLOCAL = 'http://localhost:3000';
     }
     // tslint:disable-next-line:typedef
     joinChatRoom(data) {
@@ -1042,7 +1043,7 @@ __webpack_require__.r(__webpack_exports__);
 class DoctorRoomService {
     constructor(http) {
         this.http = http;
-        this.baseURL = 'http://localhost:5000/api/';
+        this.baseURL = 'https://cs447covidchatservice.herokuapp.com/api/';
         this.endpoint = this.baseURL + 'doctorRoomList';
         this.endpointForUserID = this.baseURL + 'userIDForRandom';
         this.endpointForSaveDoctor = this.baseURL + 'saveDoctor';

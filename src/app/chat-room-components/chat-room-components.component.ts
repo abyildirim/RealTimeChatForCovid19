@@ -23,15 +23,25 @@ export class ChatRoomComponentsComponent {
     this.doctorEmail = this.route.snapshot.queryParamMap.get('email');
     this.user = this.route.snapshot.queryParamMap.get('userId');
     this.room = this.route.snapshot.queryParamMap.get('roomID');
+    console.log("DOCTOR MAIL:" + this.doctorEmail);
     if (this.doctorEmail !== '-') {
+      console.log("DOCTOR TRUE:" + this.doctorEmail);
       this.doctorOrNot = true;
     }
-    this.service.checkRoomActiveOrNot(this.room).subscribe(
-      (result) => {
-        this.checkResult(result);
-      },
-      (error) => this.router.navigate(['patient/doctor-selection'])
-    );
+    if (!this.doctorOrNot){
+      this.service.checkRoomActiveOrNot(this.room).subscribe(
+        (result) => {
+          this.checkResult(result);
+        },
+        (error) => {
+          console.log("ROOM: " + this.room)
+          // this.router.navigate(['patient/doctor-selection']); 
+      }
+      );
+    }
+    else{
+      this.checkResult("true");
+    }
   }
 
   // tslint:disable-next-line:typedef

@@ -17,7 +17,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       module.exports = __webpack_require__(
-      /*! C:\Users\Nezih Sunman\Desktop\CS447Project\node-js-getting-started\src\main.ts */
+      /*! D:\LMS\3rd Grade 2nd Semester\CS 447\Project\RealTimeChatForCovid19\src\main.ts */
       "zUnb");
       /***/
     },
@@ -312,7 +312,8 @@
         function ChatRoomService() {
           _classCallCheck(this, ChatRoomService);
 
-          this.SOCKET_ENDPOINT = 'http://localhost:5000';
+          this.SOCKET_ENDPOINT = 'https://cs447covidchatservice.herokuapp.com/';
+          this.Socket_PORT_ForLOCAL = 'http://localhost:3000';
         } // tslint:disable-next-line:typedef
 
 
@@ -2056,7 +2057,7 @@
           _classCallCheck(this, DoctorRoomService);
 
           this.http = http;
-          this.baseURL = 'http://localhost:5000/api/';
+          this.baseURL = 'https://cs447covidchatservice.herokuapp.com/api/';
           this.endpoint = this.baseURL + 'doctorRoomList';
           this.endpointForUserID = this.baseURL + 'userIDForRandom';
           this.endpointForSaveDoctor = this.baseURL + 'saveDoctor';

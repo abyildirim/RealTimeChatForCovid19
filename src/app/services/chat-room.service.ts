@@ -5,7 +5,7 @@ import {io} from 'socket.io-client';
 @Injectable()
 export class ChatRoomService {
   private SOCKET_ENDPOINT = 'https://cs447covidchatservice.herokuapp.com/';
-  private Socket_PORT_ForLOCAL = 'http://localhost:3000';
+  private Socket_PORT_ForLOCAL = 'http://localhost:5000';
   private socket; // io('http://localhost:3000/rooms');
 
   private userID: string;
@@ -22,7 +22,7 @@ export class ChatRoomService {
 
   // tslint:disable-next-line:typedef
   forNewUserJoinToChatRoom() {
-    this.socket = io(this.SOCKET_ENDPOINT);
+    this.socket = io(this.Socket_PORT_ForLOCAL);
     const observable = new Observable<{ username: string, text: string, createdAt: Date}>(observer => {
       this.socket.on('new user joined', (data) => {
         observer.next(data);
