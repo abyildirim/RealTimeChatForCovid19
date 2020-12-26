@@ -43,9 +43,6 @@ var users = []; //Active user for patient
 
 
 const activeDoctorListForWiew = [];
-activeDoctorListForWiew.push({email: 'nezih.sunman@ozu.edu.tr'});
-activeDoctorListForWiew.push({email: 'nezih.sunmann@ozu.edu.tr'});
-activeDoctorListForWiew.push({email: 'nezih.sunmannn@ozu.edu.tr'});
 
 
 app.get('/api/doctorRoomList', (req, res) => {
@@ -132,7 +129,9 @@ io.on("connection", (socket) => {
     console.log('some arrive' + username + room);
     //same user name cannot enter
     const {user} = addUser({id: socket.id, username, room, email});
-
+    if(email != "-"){
+      activeDoctorListForWiew.push({email: email})
+    }
     socket.join(user.room);
     socket.emit("message", generatemsg("Admin ,Welcome"));
     socket.broadcast.to(user.room).emit("message", generatemsg(`Admin ${user.username} has joined!`));
