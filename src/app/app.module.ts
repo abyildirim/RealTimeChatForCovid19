@@ -27,6 +27,7 @@ import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.co
 import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 import {ChatRoomComponentsComponent} from './chat-room-components/chat-room-components.component';
 import { SignInComponent } from './sign-in-component/sign-in.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { SignInComponent } from './sign-in-component/sign-in.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     FormsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

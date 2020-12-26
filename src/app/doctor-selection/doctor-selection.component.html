@@ -1,11 +1,17 @@
-<p>doctor-selection works!</p>
-<div class="row">
-  <div class="well" style="height:200px; padding:15px;">
-    Selam:
-    <div *ngFor="let item of allRooms">
-      <button (click)="gotoChatRoom(item.doctorname, item.room)">{{item.doctorname}}  {{item.room}} {{item.doctorarea}}
-      </button>
-      <br>
-    </div>
+<img class = "background-img" src="assets/img/home-bg.png">
+<div class="container-body">
+  <p class="header">Doctor Selection</p>
+  <div class="row justify-content-md-center doctor-container">
+      <div class="col-md-6 doctor-div " *ngFor="let item of allRooms">
+        <button class = "btn btn-primary doctor-button" (click)="gotoChatRoom(item.doctorname, item.room)">
+          <img class = "doctor-img" src="assets/img/mock-doctor.png" alt="doctor-img">
+          <div class="doctor-label">
+            <div>{{item.doctorname}}</div>
+            <div>{{item.room}}</div>
+            <div>{{item.doctorarea}}</div>
+          </div>
+        </button>
+        <br>
+      </div>
   </div>
 </div>

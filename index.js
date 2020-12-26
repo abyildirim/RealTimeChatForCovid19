@@ -52,7 +52,7 @@ app.get('/api/doctorRoomList', (req, res) => {
 
   function responseFunction(item, index, array) {
     var obj = {
-      doctorname: item._name + "" + item._surname,
+      doctorname: item._name + " " + item._surname,
       room: dictForChatRoomAndDoctorRalatedFields[item._email],
       doctorarea: item._doctorArea
     };

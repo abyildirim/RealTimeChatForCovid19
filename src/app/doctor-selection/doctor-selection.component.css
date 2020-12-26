@@ -1,0 +1,52 @@
+.container-body{
+    text-align: center;
+    padding: 0 20%;
+}
+.doctor-container{
+    text-align: center;
+    border: 6px solid white;
+    border-radius: 100px;
+    padding: 40px;
+    background-color: rgba(255,255,255,0.3);
+
+}
+
+.doctor-div{
+}
+.doctor-button{
+    margin: 20px;
+    padding: 20px;
+}
+
+.doctor-img{
+    width: 8em;
+}
+
+.header{
+    font-size: 4em;
+    padding: 40px;
+    color: white;
+}
+.doctor-label{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.background-img{
+    z-index: -1;
+    position: fixed;
+    overflow: hidden;
+    height: inherit;
+  }
+  
+
+.doctor-button{
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 40px;
+    border: 6px solid white;
+}
+
+.doctor-button:hover{
+    background-color: rgba(0,0,0,0.6);
+}

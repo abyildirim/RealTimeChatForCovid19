@@ -68,34 +68,41 @@
       /* harmony import */
 
 
-      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @angular/router */
+      "tyNb");
+      /* harmony import */
+
+
+      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/material/form-field */
       "kmnG");
       /* harmony import */
 
 
-      var _angular_material_input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_material_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/material/input */
       "qFsG");
       /* harmony import */
 
 
-      var _angular_material_card__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_material_card__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/material/card */
       "Wp6s");
       /* harmony import */
 
 
-      var _angular_material_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/material/button */
       "bTqV");
 
       var SignInComponent = /*#__PURE__*/function () {
-        function SignInComponent(fb, service) {
+        function SignInComponent(fb, service, router) {
           _classCallCheck(this, SignInComponent);
 
           this.fb = fb;
           this.service = service;
+          this.router = router;
           this.signInForm = this.fb.group({
             name: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
             surname: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
@@ -142,6 +149,13 @@
         }, {
           key: "checkSignInResponse",
           value: function checkSignInResponse(value) {
+            this.router.navigate(['/chatroom'], {
+              queryParams: {
+                email: this.signInForm.getRawValue().email,
+                userId: '-',
+                roomID: value
+              }
+            });
             console.log(value);
           }
         }]);
@@ -150,7 +164,7 @@
       }();
 
       SignInComponent.ɵfac = function SignInComponent_Factory(t) {
-        return new (t || SignInComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_covid_service__WEBPACK_IMPORTED_MODULE_3__["DoctorRoomService"]));
+        return new (t || SignInComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_covid_service__WEBPACK_IMPORTED_MODULE_3__["DoctorRoomService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]));
       };
 
       SignInComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -241,7 +255,7 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formGroup", ctx.signInForm);
           }
         },
-        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_4__["MatFormField"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_4__["MatLabel"], _angular_material_input__WEBPACK_IMPORTED_MODULE_5__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_material_card__WEBPACK_IMPORTED_MODULE_6__["MatCardActions"], _angular_material_button__WEBPACK_IMPORTED_MODULE_7__["MatButton"]],
+        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormField"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatLabel"], _angular_material_input__WEBPACK_IMPORTED_MODULE_6__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_material_card__WEBPACK_IMPORTED_MODULE_7__["MatCardActions"], _angular_material_button__WEBPACK_IMPORTED_MODULE_8__["MatButton"]],
         styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzaWduLWluLmNvbXBvbmVudC5jc3MifQ== */"]
       });
       /*@__PURE__*/
@@ -259,6 +273,8 @@
             type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]
           }, {
             type: _services_covid_service__WEBPACK_IMPORTED_MODULE_3__["DoctorRoomService"]
+          }, {
+            type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]
           }];
         }, null);
       })();
@@ -313,7 +329,7 @@
           _classCallCheck(this, ChatRoomService);
 
           this.SOCKET_ENDPOINT = 'https://cs447covidchatservice.herokuapp.com/';
-          this.Socket_PORT_ForLOCAL = 'http://localhost:3000';
+          this.Socket_PORT_ForLOCAL = 'http://localhost:5000';
         } // tslint:disable-next-line:typedef
 
 
@@ -328,7 +344,7 @@
           value: function forNewUserJoinToChatRoom() {
             var _this3 = this;
 
-            this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_2__["io"])(this.SOCKET_ENDPOINT);
+            this.socket = Object(socket_io_client__WEBPACK_IMPORTED_MODULE_2__["io"])(this.Socket_PORT_ForLOCAL);
             var observable = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
               _this3.socket.on('new user joined', function (data) {
                 observer.next(data);
@@ -637,16 +653,22 @@
       var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
+      /* harmony import */
 
-      function DoctorSelectionComponent_div_5_Template(rf, ctx) {
+
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @angular/material/button */
+      "bTqV");
+
+      function DoctorSelectionComponent_div_2_Template(rf, ctx) {
         if (rf & 1) {
           var _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function DoctorSelectionComponent_div_5_Template_button_click_1_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function DoctorSelectionComponent_div_2_Template_button_click_1_listener() {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r3);
 
             var item_r1 = ctx.$implicit;
@@ -721,24 +743,16 @@
       DoctorSelectionComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
         type: DoctorSelectionComponent,
         selectors: [["app-doctor-selection"]],
-        decls: 6,
+        decls: 3,
         vars: 1,
-        consts: [[1, "row"], [1, "well", 2, "height", "200px", "padding", "15px"], [4, "ngFor", "ngForOf"], [3, "click"]],
+        consts: [[1, "container"], [1, "row", "doctor-container"], ["class", "col-md-2 doctor-div", 4, "ngFor", "ngForOf"], [1, "col-md-2", "doctor-div"], ["mat-button", "", 3, "click"]],
         template: function DoctorSelectionComponent_Template(rf, ctx) {
           if (rf & 1) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "doctor-selection works!");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 0);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 1);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, " Selam: ");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, DoctorSelectionComponent_div_5_Template, 4, 3, "div", 2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, DoctorSelectionComponent_div_2_Template, 4, 3, "div", 2);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -746,13 +760,13 @@
           }
 
           if (rf & 2) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.allRooms);
           }
         },
-        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]],
-        styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJkb2N0b3Itc2VsZWN0aW9uLmNvbXBvbmVudC5jc3MifQ== */"]
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _angular_material_button__WEBPACK_IMPORTED_MODULE_4__["MatButton"]],
+        styles: [".container[_ngcontent-%COMP%]{\r\n    height: 100%;\r\n    background-color: purple;\r\n}\r\n.doctor-container[_ngcontent-%COMP%]{\r\n    margin: 20%;\r\n    background-color: red;\r\n}\r\n.doctor-div[_ngcontent-%COMP%]{\r\n    background-color: wheat;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRvY3Rvci1zZWxlY3Rpb24uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLFlBQVk7SUFDWix3QkFBd0I7QUFDNUI7QUFDQTtJQUNJLFdBQVc7SUFDWCxxQkFBcUI7QUFDekI7QUFFQTtJQUNJLHVCQUF1QjtBQUMzQiIsImZpbGUiOiJkb2N0b3Itc2VsZWN0aW9uLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY29udGFpbmVye1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogcHVycGxlO1xyXG59XHJcbi5kb2N0b3ItY29udGFpbmVye1xyXG4gICAgbWFyZ2luOiAyMCU7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7XHJcbn1cclxuXHJcbi5kb2N0b3ItZGl2e1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hlYXQ7XHJcbn0iXX0= */"]
       });
       /*@__PURE__*/
 
@@ -1893,16 +1907,22 @@
           this.doctorEmail = this.route.snapshot.queryParamMap.get('email');
           this.user = this.route.snapshot.queryParamMap.get('userId');
           this.room = this.route.snapshot.queryParamMap.get('roomID');
+          console.log("DOCTOR MAIL:" + this.doctorEmail);
 
           if (this.doctorEmail !== '-') {
+            console.log("DOCTOR TRUE:" + this.doctorEmail);
             this.doctorOrNot = true;
           }
 
-          this.service.checkRoomActiveOrNot(this.room).subscribe(function (result) {
-            _this9.checkResult(result);
-          }, function (error) {
-            return _this9.router.navigate(['patient/doctor-selection']);
-          });
+          if (!this.doctorOrNot) {
+            this.service.checkRoomActiveOrNot(this.room).subscribe(function (result) {
+              _this9.checkResult(result);
+            }, function (error) {
+              console.log("ROOM: " + _this9.room); // this.router.navigate(['patient/doctor-selection']); 
+            });
+          } else {
+            this.checkResult("true");
+          }
         } // tslint:disable-next-line:typedef
 
 
@@ -2057,7 +2077,8 @@
           _classCallCheck(this, DoctorRoomService);
 
           this.http = http;
-          this.baseURL = 'https://cs447covidchatservice.herokuapp.com/api/';
+          this.baseURL2 = 'https://cs447covidchatservice.herokuapp.com/api/';
+          this.baseURL = 'http://localhost:5000/api/';
           this.endpoint = this.baseURL + 'doctorRoomList';
           this.endpointForUserID = this.baseURL + 'userIDForRandom';
           this.endpointForSaveDoctor = this.baseURL + 'saveDoctor';
