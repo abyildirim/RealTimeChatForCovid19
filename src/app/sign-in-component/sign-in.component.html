@@ -1,34 +1,32 @@
-<form [formGroup]="signInForm" (ngSubmit)="saveForm()" appearance="standard">
-  <mat-form-field>
-    <div class="">
-      <mat-label>
-        FirstName:
-        <label>
-          <input matInput type="text" formControlName="name"/>
-        </label>
-      </mat-label>
+<img class="background-img" src="assets/img/home-bg.png">
+<div class="container-body">
+  <p class="header">Sign-In</p>
+  <div class="row justify-content-md-center general-container">
+    <div class="col-md-6 form-div ">
+      <form [formGroup]="signInForm" (ngSubmit)="saveForm()" appearance="standard">
+        <div class="row justify-content-md-center">
+          <div class="col-md-12">
+            <div class="label">
+              First Name:
+            </div>
+            <input class="form-input" type="text" formControlName="name" />
+          </div>
+          <div class="col-md-12">
+            <div class="label">
+              Last Name:
+            </div>
+            <input class="form-input" type="text" formControlName="surname">
+          </div>
+          <div class="col-md-12">
+            <div class="label">
+              Email:
+            </div>
+            <input class="form-input" type="text" formControlName="email">
+          </div>
+        </div>
+        <br>
+        <button class="btn sign-button" mat-raised-button type="submit">Submit</button>
+      </form>
     </div>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <div class="">
-      <mat-label>
-        LastName:
-        <input matInput type="text" formControlName="surname">
-      </mat-label>
-    </div>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <div class="">
-      <mat-label>
-        Email:
-        <input matInput type="text" formControlName="email">
-      </mat-label>
-    </div>
-  </mat-form-field>
-
-  <mat-card-actions>
-    <button mat-raised-button type="submit">Submit</button>
-  </mat-card-actions>
-</form>
+  </div>
+</div>
