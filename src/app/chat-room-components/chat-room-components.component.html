@@ -1,32 +1,22 @@
-<div *ngIf="connectedServer" class="container-fluid">
-  <div class="row">
-    <h2>Realtime Chat Application for Covid19</h2>
-    <hr>
-  </div>
-  <div class="row">
-    <div class="col sm-2">
-      <div style="margin-top:19px;" class="pull-right">
-        <button type="button" class="btn btn-default" (click)="leave()">Leave</button>
-      </div>
-    </div>
-  </div>
+<div *ngIf="connectedServer">
 
-  <div class="row">
-    <div class="well" style="height:200px; padding:15px;">
-      <div *ngFor="let item of messageArray">
-        <span><strong>{{item.username=="-" ? 'Doctor' : item.username}} : </strong> {{item.text}}</span>
+  <img class = "background-img" src="assets/img/home-bg.png">
+  <div class="container-body">
+    <p class="header">Chat Room of {{this.user=="-" ? 'Doctor' : "Patient ("+this.user+")"}}</p>
+    <button type="button" class="btn btn-md btn-outline-danger leave-button" (click)="leave()">Leave</button>
+    <div class="messages-div">
+      <div *ngFor="let item of messageArray.reverse()">
+        <span><strong>{{item.username=="-" ? 'Doctor' : "Patient ("+item.username+")"}} : </strong> {{item.text}}</span>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-10">
-      <input type="text" class="form-control" [(ngModel)]="messageText">
-    </div>
-    <div class="col-sm-2">
-      <button type="button" class="btn btn-success pull-right" (click)="sendMessage()">Send Message</button>
+  <div class="input-div">
+    <div class="relative-div">
+      <input type="text" class="form-control text-input" [(ngModel)]="messageText" placeholder="Enter your text..." (keydown.enter)="sendMessage()">
+      <button type="button" class="btn btn-success pull-right submit-btn" (click)="sendMessage()">Send</button>
     </div>
   </div>
 </div>
 <div *ngIf="!connectedServer">
-   <h1>Doctor is not Available!</h1>
+  <h1>Doctor is not Available!</h1>
 </div>

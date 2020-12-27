@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ChatRoomService} from '../services/chat-room.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DoctorRoomService} from '../services/covid.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ChatRoomService } from '../services/chat-room.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DoctorRoomService } from '../services/covid.service';
 
 @Component({
   selector: 'app-chat-room-components',
@@ -20,6 +20,7 @@ export class ChatRoomComponentsComponent {
 
   constructor(private roomService: ChatRoomService, private route: ActivatedRoute,
               private service: DoctorRoomService, private router: Router) {
+    this.messageText = "";
     this.doctorEmail = this.route.snapshot.queryParamMap.get('email');
     this.user = this.route.snapshot.queryParamMap.get('userId');
     this.room = this.route.snapshot.queryParamMap.get('roomID');
@@ -64,25 +65,27 @@ export class ChatRoomComponentsComponent {
 
   // tslint:disable-next-line:typedef
   join() {
-    this.roomService.joinChatRoom({username: this.user, room: this.room, email: this.doctorEmail});
+    this.roomService.joinChatRoom({ username: this.user, room: this.room, email: this.doctorEmail });
   }
 
   // tslint:disable-next-line:typedef
   leave() {
-    this.roomService.leaveRoom({username: this.user, room: this.room, email: this.doctorEmail});
+    this.roomService.leaveRoom({ username: this.user, room: this.room, email: this.doctorEmail });
     this.router.navigate(['home']);
   }
 
   // tslint:disable-next-line:typedef
   sendMessage() {
     console.log(this.messageText);
-    this.roomService.sendMessageToAllUsers({
-      username: this.user,
-      room: this.room,
-      email: this.doctorEmail,
-      message: this.messageText
-    });
-    this.messageText = '';
+    if (this.messageText != "") {
+      this.roomService.sendMessageToAllUsers({
+        username: this.user,
+        room: this.room,
+        email: this.doctorEmail,
+        message: this.messageText
+      });
+      this.messageText = '';
+    }
   }
 
 }

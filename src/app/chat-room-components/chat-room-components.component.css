@@ -1,0 +1,98 @@
+.container-body{
+  text-align: center;
+  padding: 0 20%;
+}
+
+.header{
+  font-size: 4em;
+  padding-top: 40px;
+  color: white;
+}
+
+.background-img{
+  z-index: -1;
+  position: fixed;
+  overflow: hidden;
+  height: inherit;
+}
+.input-div{
+  position: fixed;
+  bottom: 0;
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 100px;
+}
+
+.messages-div{
+  text-align: left;
+  overflow: scroll;
+  height: 500px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  color: white;
+  font-size: 20px;
+}
+
+.submit-btn{
+  width: 20%;
+  display: inline-block;
+  margin-left: 5%;
+  border-radius: 100px;
+  font-weight: bold;
+  padding: 20px !important;
+}
+
+.text-input{
+  width: 75%;
+  display: inline-block;
+  border-radius: 100px;
+  font-weight: bold;
+  padding: 30px !important;
+}
+
+.relative-div{
+  position: relative;
+  width: 100%;
+}
+
+.leave-button{
+  border: 3px solid white;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+
+/*Custom Scrollbar*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 100px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+@media (max-width: 800px) {
+
+  .header{
+    font-size: 2em;
+  }
+
+}
