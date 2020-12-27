@@ -287,9 +287,9 @@ var obj = {"name":  input.name;
     "gender" = input.gender;
     "doctorArea" = input.doctorArea;};*/
 
-let newDoctor = new Doctor({
-  name: "nezih",
-  surname: "sunman",
+let DoctorNezih = new Doctor({
+  name: "Nezih",
+  surname: "Sunman",
   email: "nezih.sunman@ozu.edu.tr",
   age: "21",
   phonenumber: "53325981",
@@ -297,10 +297,10 @@ let newDoctor = new Doctor({
   gender: "male",
   doctorArea: "Dahiliye"
 });
-dictForChatRoomAndDoctorRalatedFields[newDoctor._email] = 1;
-let newDoctor2 = new Doctor({
-  name: "ece",
-  surname: "nigiz",
+dictForChatRoomAndDoctorRalatedFields[DoctorNezih._email] = 1;
+let DoctorEce = new Doctor({
+  name: "Ece",
+  surname: "Nigiz",
   email: "ece.nigiz@ozu.edu.tr",
   age: "24",
   phonenumber: "53325981",
@@ -308,24 +308,49 @@ let newDoctor2 = new Doctor({
   gender: "female",
   doctorArea: "Dahiliye"
 });
-dictForChatRoomAndDoctorRalatedFields[newDoctor2._email] = 2;
-let newDoctor3 = new Doctor({
-  name: "nezih",
-  surname: "sunman",
-  email: "nezih.sunmannn@ozu.edu.tr",
+dictForChatRoomAndDoctorRalatedFields[DoctorEce._email] = 2;
+let DoctorBurak = new Doctor({
+  name: "Burak",
+  surname: "Yıldırım",
+  email: "burak.yildirim@ozu.edu.tr",
   age: "21",
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
   doctorArea: "Dahiliye"
 });
+dictForChatRoomAndDoctorRalatedFields[DoctorBurak._email] = 3;
 
-dictForChatRoomAndDoctorRalatedFields[newDoctor3._email] = 3;
+let DoctorNadir = new Doctor({
+  name: "Nadir",
+  surname: "Yüceer",
+  email: "nadir.yuceer@ozu.edu.tr",
+  age: "21",
+  phonenumber: "53325981",
+  birthdate: "17.06",
+  gender: "male",
+  doctorArea: "Dahiliye"
+});
+dictForChatRoomAndDoctorRalatedFields[DoctorNadir._email] = 4;
+
+let DoctorEcem = new Doctor({
+  name: "Ecem",
+  surname: "Öz",
+  email: "ecem.oz@ozu.edu.tr",
+  age: "21",
+  phonenumber: "53325981",
+  birthdate: "17.06",
+  gender: "male",
+  doctorArea: "Dahiliye"
+});
+dictForChatRoomAndDoctorRalatedFields[DoctorEcem._email] = 5;
 
 
-singedDoctorListForActiveOrPassiveDoctor.push(newDoctor);
-singedDoctorListForActiveOrPassiveDoctor.push(newDoctor2);
-singedDoctorListForActiveOrPassiveDoctor.push(newDoctor3);
+singedDoctorListForActiveOrPassiveDoctor.push(DoctorNezih);
+singedDoctorListForActiveOrPassiveDoctor.push(DoctorEce);
+singedDoctorListForActiveOrPassiveDoctor.push(DoctorBurak);
+singedDoctorListForActiveOrPassiveDoctor.push(DoctorNadir);
+singedDoctorListForActiveOrPassiveDoctor.push(DoctorEcem);
 
 
 server.listen(PORT, () => console.log("Server has started on port:`" + PORT));
