@@ -1,15 +1,14 @@
-<div class="desktopSettings">
-  <img class = "background-img" src="assets/img/home-bg.png">
-  <div class="container-div">
-    <div class="banner-div" fxLayout="row" fxLayoutAlign="center">
-        <img class = "banner" src="assets/img/home-banner.png">
+<img class="background-img" src="assets/img/home-bg.png">
+<div class="container-body">
+  <div class="row justify-content-md-center general-container">
+    <div class="col-md-12">
+      <img class="banner" src="assets/img/home-banner.png">
     </div>
-
-    <div fxLayout="row" fxLayoutAlign="space-around center" >
-      <div fxLayoutGap="50px">
-        <button class="selection-button button-radius-left" (click)="routePatient()">Patient</button>
-        <button class="selection-button button-radius-right" (click)="routeDoctor()">Doctor</button>
-      </div>
+    <div class="col-md-4">
+      <button class="btn selection-button button-radius-left" (click)="routePatient()">Patient</button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn selection-button button-radius-right" (click)="routeDoctor()">Doctor</button>
     </div>
   </div>
 </div>
