@@ -17,7 +17,24 @@ export class DoctorSelectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.doctorRoomService.getAllDoctorRooms().subscribe(
-      (result) => this.allRooms = result,
+      (result) => {
+        this.allRooms = result
+        this.allRooms.forEach(doctor=> {
+          this.doctorRoomService.checkRoomActiveOrNot(doctor.room).subscribe(
+            (result) => {
+              if (result === 'true') {
+                doctor.isActive = true;
+              }
+              else{
+                doctor.isActive = false;
+              }
+            },
+            (error) => {
+              doctor.isActive = false;
+            }
+          );
+       });
+      },
       (error) => this.router.navigate(['home'])
     );
     this.doctorRoomService.getUserID().subscribe(

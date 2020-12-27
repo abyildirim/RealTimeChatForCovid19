@@ -58,7 +58,7 @@ export class ChatRoomComponentsComponent {
 
       this.join();
     } else {
-      this.router.navigate(['patient/doctor-selection']);
+      //this.router.navigate(['patient/doctor-selection']);
     }
   }
 

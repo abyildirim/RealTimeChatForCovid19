@@ -3,7 +3,7 @@
   <p class="header">Doctor Selection</p>
   <div class="row justify-content-md-center doctor-container">
       <div class="col-md-6 doctor-div " *ngFor="let item of allRooms">
-        <button class = "btn btn-primary doctor-button" (click)="gotoChatRoom(item.doctorname, item.room)">
+        <button class = "btn btn-primary doctor-button" [disabled]="!item.isActive" (click)="gotoChatRoom(item.doctorname, item.room)">
           <img class = "doctor-img" src="assets/img/mock-doctor.png" alt="doctor-img">
           <div class="doctor-label">
             <div>{{item.doctorname}}</div>

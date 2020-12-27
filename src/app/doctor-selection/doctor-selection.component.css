@@ -48,3 +48,7 @@
 .doctor-button:hover{
     background-color: rgba(0,0,0,0.6);
 }
+
+.doctor-button:disabled:hover {
+    background-color: rgba(0,0,0,0.05);
+  }
