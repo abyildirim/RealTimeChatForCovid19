@@ -13,10 +13,6 @@
 
 .doctor-div{
 }
-.doctor-button{
-    margin: 20px;
-    padding: 20px;
-}
 
 .doctor-img{
     width: 8em;
@@ -42,6 +38,8 @@
   
 
 .doctor-button{
+    margin: 20px;
+    padding: 20px;
     background-color: rgba(0,0,0,0.05);
     border-radius: 40px;
     border: 6px solid white;

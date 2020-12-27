@@ -1,0 +1,47 @@
+.background-img{
+    z-index: -1;
+    position: fixed;
+    overflow: hidden;
+    height: inherit;
+  }
+
+.container-body{
+    text-align: center;
+    padding: 80px 20%;
+}
+.general-container{
+    text-align: center;
+    border: 6px solid white;
+    border-radius: 100px;
+    padding: 40px;
+    background-color: rgba(255,255,255,0.3);
+
+}
+  
+.header{
+    font-size: 4em;
+    padding: 40px;
+    color: white;
+}
+
+.sign-button{
+    margin: 20px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 40px;
+    border: 6px solid white;
+}
+
+.sign-button:hover{
+    background-color: rgba(0,0,0,0.6);
+}
+
+.image{
+    width: 8em;
+}
+
+.label{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.5em;
+}

@@ -1,5 +1,22 @@
-<p>doctor-registration works!</p>
-<div>
-  <button (click)="singIn()">Sing in</button>
-  <button (click)="singUp()">Sing up</button>
+<img class = "background-img" src="assets/img/home-bg.png">
+<div class="container-body">
+  <p class="header">Doctor Registration</p>
+  <div class="row justify-content-md-center general-container">
+      <div class="col-md-6 sign-div ">
+        <button class = "btn btn-primary sign-button" (click)="singIn()">
+          <img class = "image" src="assets/img/sign-in.png" alt="sign-up-img">
+          <div class="label">
+            Sign in
+          </div>
+        </button>
+      </div>
+      <div class="col-md-6 sign-div ">
+        <button class = "btn btn-primary sign-button" (click)="singUp()">
+          <img class = "image" src="assets/img/sign-up.png" alt="sign-in-img">
+          <div class="label">
+            Sign up
+          </div>
+        </button>
+      </div>
+  </div>
 </div>
