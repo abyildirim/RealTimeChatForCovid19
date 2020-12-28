@@ -19,11 +19,13 @@ export class ChatRoomService {
   joinChatRoom(data) {
     this.socket.emit('join', data);
   }
+  socketConnect() {
+    this.socket = io(this.Socket_PORT_ForLOCAL);
+  }
 
   // tslint:disable-next-line:typedef
-  forNewUserJoinToChatRoom() {
-    this.socket = io(this.Socket_PORT_ForLOCAL);
-    const observable = new Observable<{ username: string, text: string, createdAt: Date}>(observer => {
+  /*forNewUserJoinToChatRoom() {
+    const observable = new Observable<{ username: string, text: string, createdAt: Date }>(observer => {
       this.socket.on('new user joined', (data) => {
         observer.next(data);
       });
@@ -33,12 +35,12 @@ export class ChatRoomService {
     });
 
     return observable;
-  }
+  }*/
 
   // tslint:disable-next-line:typedef
-  leftChatRoomByUserActions() {
+  doctorLeftRoom() {
     const observable = new Observable<{ username: string, text: string, createdAt: Date }>(observer => {
-      this.socket.on('left room', (data) => {
+      this.socket.on('doctor left room', (data) => {
         observer.next(data);
       });
       return () => {
@@ -56,7 +58,7 @@ export class ChatRoomService {
   // tslint:disable-next-line:typedef
   takenNewMessageFromOtherUsers() {
     // tslint:disable-next-line:ban-types
-    const observable = new Observable<{ username: string, text: string, createdAt: Date}>(observer => {
+    const observable = new Observable<{ username: string, text: string, createdAt: Date }>(observer => {
       this.socket.on('message', (data) => {
         observer.next(data);
       });
@@ -70,6 +72,7 @@ export class ChatRoomService {
 
   // tslint:disable-next-line:typedef
   leaveRoom(data) {
-    this.socket.emit('leave', data);
+    // this.socket.emit('leave', data);
+    this.socket.disconnect();
   }
 }

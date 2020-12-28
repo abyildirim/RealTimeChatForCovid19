@@ -33,9 +33,10 @@
     z-index: -1;
     position: fixed;
     overflow: hidden;
-    height: inherit;
+    height: 2160px ;
+    width: 4096px;
   }
-  
+
 
 .doctor-button{
     margin: 20px;

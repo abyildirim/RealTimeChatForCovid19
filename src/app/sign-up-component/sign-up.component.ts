@@ -17,7 +17,7 @@ export class SignUpComponent implements OnInit, OnChanges {
 
   genders: any = [{name: 'male', value: 0}, {name: 'female', value: 1}];
   doctorOrPatient: any = [{name: 'doctor', value: 0}, {name: 'hasta', value: 1}];
-  doctorArea: any = [{name: 'dahiliye', value: 'dahiliye'}];
+  doctorArea: any = [{name: 'dahiliye', value: 'iç hastalıkları'}];
   personalform = this.fb.group({
     name: ['', Validators.required],
     surname: ['', Validators.required],
@@ -27,6 +27,7 @@ export class SignUpComponent implements OnInit, OnChanges {
     birthdate: ['', Validators.required],
     gender: ['', Validators.required],
     doctorArea: ['', Validators.required],
+    password: ['', Validators.required]
   });
 
   private subscription = new Subscription();

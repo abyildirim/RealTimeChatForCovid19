@@ -6,7 +6,7 @@
     <button type="button" class="btn btn-md btn-outline-danger leave-button" (click)="leave()">Leave</button>
     <div class="messages-div">
       <div *ngFor="let item of messageArray.reverse()">
-        <span><strong>{{item.username=="-" ? 'Doctor' : "Patient ("+item.username+")"}} : </strong> {{item.text}}</span>
+        <span style="justify-content: end"><strong>{{item.username=="-" ? 'Doctor' : "Patient ("+item.username+")"}} : </strong> {{item.text}}</span>
       </div>
     </div>
   </div>
@@ -18,5 +18,7 @@
   </div>
 </div>
 <div *ngIf="!connectedServer">
-  <h1>Doctor is not Available!</h1>
+  <h1>Doctor left the room!</h1>
+  <h1>Please click button and try again</h1>
+  <button type="button" class="btn btn-success pull-right submit-btn" (click)="gotoHome()"> GotoHome</button>
 </div>

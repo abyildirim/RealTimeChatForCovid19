@@ -38,7 +38,7 @@ const io = socketio(server, {
 var userIDList = [];
 var roomIdList = [];
 var dictForChatRoomAndDoctorRalatedFields = {};
-var singedDoctorListForActiveOrPassiveDoctor = [];
+var singedDoctorList = [];
 var users = []; //Active user for patient
 
 
@@ -48,13 +48,14 @@ const activeDoctorListForWiew = [];
 app.get('/api/doctorRoomList', (req, res) => {
   var response = [];
 
-  singedDoctorListForActiveOrPassiveDoctor.forEach(responseFunction);
+  singedDoctorList.forEach(responseFunction);
 
   function responseFunction(item, index, array) {
     var obj = {
       doctorname: item._name + " " + item._surname,
       room: dictForChatRoomAndDoctorRalatedFields[item._email],
-      doctorarea: item._doctorArea
+      doctorarea: item._doctorArea,
+      isActive: checkRoomIsActive(dictForChatRoomAndDoctorRalatedFields[item._email])
     };
     response.push(obj);
   }
@@ -71,9 +72,9 @@ app.post('/api/saveDoctor', jsonParser, (req, res, next) => {
     const doctor = JSON.parse(req.body.data);
     const tempDoctor = new Doctor(doctor);
     const roomNumber = roomIdList.pop();
-    activeDoctorListForWiew.push({email: '' + tempDoctor._email});
-    dictForChatRoomAndDoctorRalatedFields[tempDoctor._email] = roomNumber;
-    singedDoctorListForActiveOrPassiveDoctor.push(tempDoctor);
+    activeDoctorListForWiew.push({email: '' + tempDoctor._email, numberOfUser: 0});
+    dictForChatRoomAndDoctorRalatedFields[tempDoctor._email] = '' + roomNumber;
+    singedDoctorList.push(tempDoctor);
     res.json(roomNumber);
     //Bug not chegking room number same of system of remove all room numbers
   } catch (e) {
@@ -87,7 +88,7 @@ app.post('/api/doctorValidationForSignIn', jsonParser, (req, res, next) => {
   try {
     //Check doctor exits and return room number and name for routing
     const doctor = JSON.parse(req.body.data);
-    if (checkDoctorMailAddress(doctor.email) && checkDoctorNameAndSurname(doctor.name, doctor.surname, doctor.email)) {
+    if (checkDoctorMailAddress(doctor.email) && checkPassword(doctor.password, doctor.email)) {
       //Take user room number from list for doctor and route
       res.json(dictForChatRoomAndDoctorRalatedFields[doctor.email]);
     } else {
@@ -106,11 +107,11 @@ app.post('/api/checkRoomIsActive', jsonParser, (req, res, next) => {
     const roomNumber = JSON.parse(req.body.data);
     var email = '';
     for (var key in dictForChatRoomAndDoctorRalatedFields) {
-      if (dictForChatRoomAndDoctorRalatedFields[key] === roomNumber) {
+      if (dictForChatRoomAndDoctorRalatedFields[key] === '' + roomNumber) {
         email = key;
       }
     }
-    var index = activeDoctorListForWiew.findIndex(x => x.email === email);
+    var index = activeDoctorListForWiew.findIndex(x => x.email === email && x.numberOfUser === 0);
     if (index !== -1) {
       res.json("true");
     } else {
@@ -126,15 +127,23 @@ io.on("connection", (socket) => {
   console.log("new connection");
 
   socket.on("join", ({username, room, email}) => {
-    console.log('some arrive' + username + room);
+    console.log('some arrive' + "username" + username + "room" + room);
     //same user name cannot enter
     const {user} = addUser({id: socket.id, username, room, email});
-    if(email != "-"){
-      activeDoctorListForWiew.push({email: email})
+    if (email != "-") {
+      activeDoctorListForWiew.push({email: email, numberOfUser: 0})
+    } else {
+      const doctorEmail = getDoctorMailFromRoom(room);
+      const index = activeDoctorListForWiew.findIndex((user2) => {
+        return user2.email === doctorEmail
+      });
+      if (activeDoctorListForWiew[index].numberOfUser === 0) {
+        activeDoctorListForWiew[index].numberOfUser = 1;
+      }
     }
     socket.join(user.room);
-    socket.emit("message", generatemsg("Admin ,Welcome"));
-    socket.broadcast.to(user.room).emit("message", generatemsg(`Admin ${user.username} has joined!`));
+    socket.emit("message", generatemsg("Welcome to Chat Room"));
+    socket.broadcast.to(user.room).emit("message", generatemsg(`${user.username} has joined!`));
 
     io.to(user.room).emit("roomData", {
       room: user.room,
@@ -145,14 +154,12 @@ io.on("connection", (socket) => {
   socket.on("message", (msg) => {
     const user = getUser(socket.id);
     io.to(user.room).emit("message", generatemsg(user.username, msg.message));
-    console.log('message working');
   });
 
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);
-    console.log(user);
     if (user) {
-      io.to(user.room).emit("message", generatemsg(`Admin ${user.username} A user  has left`));
+      io.to(user.room).emit("message", generatemsg(`${user.username} A user  has left`));
 
       io.to(user.room).emit("roomData", {
         room: user.room,
@@ -163,13 +170,23 @@ io.on("connection", (socket) => {
           return user2.email === user.email
         });
         if (index !== -1) {
+          io.to(user.room).emit("doctor left room", generatemsg("", "doctor left"));
           return activeDoctorListForWiew.splice(index, 1)[0]
+        }
+      } else {
+        const doctorEmail = getDoctorMailFromRoom(user.room);
+        const index = activeDoctorListForWiew.findIndex((user2) => {
+          return user2.email === doctorEmail
+        });
+        if (activeDoctorListForWiew[index].numberOfUser === 1) {
+          activeDoctorListForWiew[index].numberOfUser = 0;
         }
       }
     }
 
   })
 });
+
 
 const newuser = [];
 const addUser = ({id, username, room, email}) => {
@@ -227,6 +244,15 @@ const getUserInRoom = (room) => {
 
 };
 
+const getDoctorMailFromRoom = (room) => {
+  for (var key in dictForChatRoomAndDoctorRalatedFields) {
+    if (dictForChatRoomAndDoctorRalatedFields[key] === room) {
+      return key;
+    }
+  }
+
+};
+
 const generatemsg = (username, text) => {
   return {
     username: username,
@@ -236,7 +262,7 @@ const generatemsg = (username, text) => {
 };
 
 const checkDoctorMailAddress = (email) => {
-  const indexOfMail = singedDoctorListForActiveOrPassiveDoctor.findIndex((Doctor) => {
+  const indexOfMail = singedDoctorList.findIndex((Doctor) => {
     return email === Doctor._email
   });
 
@@ -244,25 +270,36 @@ const checkDoctorMailAddress = (email) => {
 };
 
 const getIndexDoctorMailAddress = (email) => {
-  const indexOfMail = singedDoctorListForActiveOrPassiveDoctor.findIndex((Doctor) => {
+  const indexOfMail = singedDoctorList.findIndex((Doctor) => {
     return email === Doctor._email
   });
   return indexOfMail;
 
 };
 
-
-const checkDoctorNameAndSurname = (name, surname, mail) => {
+const checkPassword = (password, mail) => {
   const indexOfMail = getIndexDoctorMailAddress(mail);
   if (indexOfMail === -1) {
     return false;
   }
-  if (singedDoctorListForActiveOrPassiveDoctor[indexOfMail]._name === name && singedDoctorListForActiveOrPassiveDoctor[indexOfMail]._surname === surname) {
+  if (singedDoctorList[indexOfMail]._password === password) {
     return true;
   } else {
     return false;
   }
 };
+
+const checkRoomIsActive = (roomNumber) => {
+  //Check doctor exits and return room number and name for routing
+  var email = '';
+  for (var key in dictForChatRoomAndDoctorRalatedFields) {
+    if (dictForChatRoomAndDoctorRalatedFields[key] === roomNumber) {
+      email = key;
+    }
+  }
+  var index = activeDoctorListForWiew.findIndex(x => x.email === email && x.numberOfUser === 0);
+  return index !== -1;
+}
 
 var key = function (obj) {
   // Some unique object-dependent key
@@ -295,9 +332,10 @@ let DoctorNezih = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye"
+  doctorArea: "Dahiliye",
+  password: "123456"
 });
-dictForChatRoomAndDoctorRalatedFields[DoctorNezih._email] = 1;
+dictForChatRoomAndDoctorRalatedFields[DoctorNezih._email] = '1';
 let DoctorEce = new Doctor({
   name: "Ece",
   surname: "Nigiz",
@@ -306,9 +344,10 @@ let DoctorEce = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "female",
-  doctorArea: "Dahiliye"
+  doctorArea: "Dahiliye",
+  password: "123456"
 });
-dictForChatRoomAndDoctorRalatedFields[DoctorEce._email] = 2;
+dictForChatRoomAndDoctorRalatedFields[DoctorEce._email] = '2';
 let DoctorBurak = new Doctor({
   name: "Burak",
   surname: "Yıldırım",
@@ -317,9 +356,10 @@ let DoctorBurak = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye"
+  doctorArea: "Dahiliye",
+  password: "123456"
 });
-dictForChatRoomAndDoctorRalatedFields[DoctorBurak._email] = 3;
+dictForChatRoomAndDoctorRalatedFields[DoctorBurak._email] = '3';
 
 let DoctorNadir = new Doctor({
   name: "Nadir",
@@ -329,9 +369,10 @@ let DoctorNadir = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye"
+  doctorArea: "Dahiliye",
+  password: "123456"
 });
-dictForChatRoomAndDoctorRalatedFields[DoctorNadir._email] = 4;
+dictForChatRoomAndDoctorRalatedFields[DoctorNadir._email] = '4';
 
 let DoctorEcem = new Doctor({
   name: "Ecem",
@@ -341,16 +382,17 @@ let DoctorEcem = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye"
+  doctorArea: "Dahiliye",
+  password: "123456"
 });
-dictForChatRoomAndDoctorRalatedFields[DoctorEcem._email] = 5;
+dictForChatRoomAndDoctorRalatedFields[DoctorEcem._email] = '5';
 
 
-singedDoctorListForActiveOrPassiveDoctor.push(DoctorNezih);
-singedDoctorListForActiveOrPassiveDoctor.push(DoctorEce);
-singedDoctorListForActiveOrPassiveDoctor.push(DoctorBurak);
-singedDoctorListForActiveOrPassiveDoctor.push(DoctorNadir);
-singedDoctorListForActiveOrPassiveDoctor.push(DoctorEcem);
+singedDoctorList.push(DoctorNezih);
+singedDoctorList.push(DoctorEce);
+singedDoctorList.push(DoctorBurak);
+singedDoctorList.push(DoctorNadir);
+singedDoctorList.push(DoctorEcem);
 
 
 server.listen(PORT, () => console.log("Server has started on port:`" + PORT));

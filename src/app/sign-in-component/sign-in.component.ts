@@ -12,8 +12,7 @@ import {DoctorRoomService} from '../services/covid.service';
 })
 export class SignInComponent implements OnInit, OnChanges {
   signInForm = this.fb.group({
-    name: ['', Validators.required],
-    surname: ['', Validators.required],
+    password: ['', Validators.required],
     email: ['', Validators.required],
   });
 

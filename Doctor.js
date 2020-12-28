@@ -8,6 +8,7 @@ const Doctor = class {
     this._birthdate = input.birthdate;
     this._gender = input.gender;
     this._doctorArea = input.doctorArea;
+    this._password = input.password;
   }
   get doctorArea() {
     return this._doctorArea;

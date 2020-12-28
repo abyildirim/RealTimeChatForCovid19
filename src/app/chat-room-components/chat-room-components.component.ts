@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ChatRoomService } from '../services/chat-room.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DoctorRoomService } from '../services/covid.service';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChatRoomService} from '../services/chat-room.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DoctorRoomService} from '../services/covid.service';
 
 @Component({
   selector: 'app-chat-room-components',
@@ -9,7 +9,7 @@ import { DoctorRoomService } from '../services/covid.service';
   styleUrls: ['./chat-room-components.component.css'],
   providers: [ChatRoomService]
 })
-export class ChatRoomComponentsComponent {
+export class ChatRoomComponentsComponent implements OnDestroy {
   connectedServer = false;
   user: string;
   room: string;
@@ -20,13 +20,13 @@ export class ChatRoomComponentsComponent {
 
   constructor(private roomService: ChatRoomService, private route: ActivatedRoute,
               private service: DoctorRoomService, private router: Router) {
-    this.messageText = "";
+    this.messageText = '';
     this.doctorEmail = this.route.snapshot.queryParamMap.get('email');
     this.user = this.route.snapshot.queryParamMap.get('userId');
     this.room = this.route.snapshot.queryParamMap.get('roomID');
-    console.log("DOCTOR MAIL:" + this.doctorEmail);
+    console.log('DOCTOR MAIL:' + this.doctorEmail);
     if (this.doctorEmail !== '-') {
-      console.log("DOCTOR TRUE:" + this.doctorEmail);
+      console.log('DOCTOR TRUE:' + this.doctorEmail);
       this.doctorOrNot = true;
     }
     if (!this.doctorOrNot) {
@@ -35,12 +35,12 @@ export class ChatRoomComponentsComponent {
           this.checkResult(result);
         },
         (error) => {
-          console.log("ROOM: " + this.room)
+          console.log('ROOM: ' + this.room);
           // this.router.navigate(['patient/doctor-selection']);
         }
       );
     } else {
-      this.checkResult("true");
+      this.checkResult('true');
     }
   }
 
@@ -48,36 +48,37 @@ export class ChatRoomComponentsComponent {
   checkResult(result) {
     if (result === 'true') {
       this.connectedServer = true;
-      this.roomService.forNewUserJoinToChatRoom()
-        .subscribe(data => this.messageArray.push(data));
+      this.roomService.socketConnect();
+      /*this.roomService.forNewUserJoinToChatRoom()
+        .subscribe(data => this.messageArray.push(data));*/
 
-      this.roomService.leftChatRoomByUserActions()
-        .subscribe(data => this.messageArray.push(data));
+      this.roomService.doctorLeftRoom()
+        .subscribe(data => this.checkDoctorIsLeft(data));
 
       this.roomService.takenNewMessageFromOtherUsers()
         .subscribe(data => this.messageArray.push(data));
 
       this.join();
     } else {
-      //this.router.navigate(['patient/doctor-selection']);
+      this.router.navigate(['patient/doctor-selection']);
     }
   }
 
   // tslint:disable-next-line:typedef
   join() {
-    this.roomService.joinChatRoom({ username: this.user, room: this.room, email: this.doctorEmail });
+    this.roomService.joinChatRoom({username: this.user, room: this.room, email: this.doctorEmail});
   }
 
   // tslint:disable-next-line:typedef
   leave() {
-    this.roomService.leaveRoom({ username: this.user, room: this.room, email: this.doctorEmail });
-    this.router.navigate(['home']);
+    this.roomService.leaveRoom({username: this.user, room: this.room, email: this.doctorEmail});
+    this.gotoHome();
   }
 
   // tslint:disable-next-line:typedef
   sendMessage() {
     console.log(this.messageText);
-    if (this.messageText != "") {
+    if (this.messageText !== '') {
       this.roomService.sendMessageToAllUsers({
         username: this.user,
         room: this.room,
@@ -88,4 +89,21 @@ export class ChatRoomComponentsComponent {
     }
   }
 
+  // tslint:disable-next-line:typedef
+  gotoHome() {
+    this.router.navigate(['home']);
+  }
+
+  private checkDoctorIsLeft(data: { username: string; text: string; createdAt: Date }) {
+    console.log(data.text);
+    if (data.text === 'doctor left') {
+      console.log(data.text);
+      this.connectedServer = false;
+      this.roomService.leaveRoom({username: this.user, room: this.room, email: this.doctorEmail});
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.roomService.leaveRoom({username: this.user, room: this.room, email: this.doctorEmail});
+  }
 }

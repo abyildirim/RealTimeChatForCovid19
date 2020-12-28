@@ -18,8 +18,8 @@ export class DoctorSelectionComponent implements OnInit {
   ngOnInit(): void {
     this.doctorRoomService.getAllDoctorRooms().subscribe(
       (result) => {
-        this.allRooms = result
-        this.allRooms.forEach(doctor=> {
+        this.allRooms = result;
+        /*this.allRooms.forEach(doctor=> {
           this.doctorRoomService.checkRoomActiveOrNot(doctor.room).subscribe(
             (result) => {
               if (result === 'true') {
@@ -33,7 +33,7 @@ export class DoctorSelectionComponent implements OnInit {
               doctor.isActive = false;
             }
           );
-       });
+       });*/
       },
       (error) => this.router.navigate(['home'])
     );

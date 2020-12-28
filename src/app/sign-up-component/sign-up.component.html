@@ -41,6 +41,15 @@
         <mat-form-field>
           <div class="">
             <mat-label>
+              Password:
+              <input matInput type="text" formControlName="password">
+            </mat-label>
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <div class="">
+            <mat-label>
               Age:
               <input matInput type="text" formControlName="age">
             </mat-label>
@@ -78,30 +87,17 @@
           </mat-form-field>
         </div>
         <br>
-        <mat-form-field>
-          <div class="">
-            <mat-label> Birthdate
-              <input matInput type="date" formControlName="birthdate" placeholder="Pick a date">
-              <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
-              <mat-datepicker #birthdate></mat-datepicker>
-            </mat-label>
-          </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Birth date</mat-label>
+          <input matInput formControlName="birthdate" placeholder="Pick a date" [matDatepicker]="birthdate">
+          <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
+          <mat-datepicker #birthdate></mat-datepicker>
         </mat-form-field>
         <br>
         <mat-card-actions>
           <button mat-raised-button type="submit" [disabled]="formDisabled()">Submit</button>
         </mat-card-actions>
       </form>
-    </div>
-  </div>
-  <div class="middleSection2">
-    <div fxLayoutAlign="center">
-      <button mat-button style="color: black; background: #f8f9fa">
-        Are you hasta!!?
-      </button>
-      <button mat-button style="color: black; background: #f8f9fa">If you are ready start
-        Are you Doctor?
-      </button>
     </div>
   </div>
 </div>
