@@ -19,6 +19,7 @@ export class ChatRoomService {
   joinChatRoom(data) {
     this.socket.emit('join', data);
   }
+
   socketConnect() {
     this.socket = io(this.Socket_PORT_ForLOCAL);
   }
@@ -72,7 +73,9 @@ export class ChatRoomService {
 
   // tslint:disable-next-line:typedef
   leaveRoom(data) {
-    // this.socket.emit('leave', data);
-    this.socket.disconnect();
+    if (this.socket) {
+      // this.socket.emit('leave', data);
+      this.socket.disconnect();
+    }
   }
 }
