@@ -1,8 +1,9 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {DoctorRoomService} from '../services/covid.service';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class SignInComponent implements OnInit, OnChanges {
   onChange: any = (_: SignInForm) => {
   }
 
-  constructor(private fb: FormBuilder, private service: DoctorRoomService, private router: Router) {
+  constructor(private fb: FormBuilder, private service: DoctorRoomService, private router: Router, private dialog: MatDialog) {
   }
 
   ngOnChanges(simpleChanges: SimpleChanges): void {
@@ -41,12 +42,13 @@ export class SignInComponent implements OnInit, OnChanges {
   // tslint:disable-next-line:typedef
   saveForm() {
     if (this.signInForm.invalid) {
+      this.openDialog();
       return;
     }
 
     this.service.doctorValidationForSignIn(this.signInForm.getRawValue()).subscribe(
       (result) => this.checkSignInResponse(result),
-      (error) => console.log(error)
+      (error) => this.openDialog()
     );
   }
 
@@ -60,13 +62,26 @@ export class SignInComponent implements OnInit, OnChanges {
           roomID: value
         }
       });
+    } else {
+      this.openDialog();
     }
-    console.log(value);
-  };
+  }
+
+  openDialog(): void {
+    this.dialog.open(DialogForNoPasswordComponent);
+  }
 }
 
 export interface SignInForm {
   firstName: string;
   lastName: string;
   email: string;
+}
+
+@Component({
+  selector: 'app-dialog-for-no-password-dialog',
+  templateUrl: 'dialog-for-no-password-dialog.html',
+})
+export class DialogForNoPasswordComponent {
+
 }

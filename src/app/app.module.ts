@@ -26,8 +26,9 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
 import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 import {ChatRoomComponentsComponent} from './chat-room-components/chat-room-components.component';
-import { SignInComponent } from './sign-in-component/sign-in.component';
+import {DialogForNoPasswordComponent, SignInComponent} from './sign-in-component/sign-in.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomePageComponent,
     ChatRoomComponentsComponent,
     SignInComponent,
+    DialogForNoPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +63,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FlexLayoutModule,
     FormsModule,
     NgbModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

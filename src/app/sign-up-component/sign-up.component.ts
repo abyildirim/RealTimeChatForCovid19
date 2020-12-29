@@ -58,6 +58,7 @@ export class SignUpComponent implements OnInit, OnChanges {
   saveForm(): void {
     console.log('submitted');
     if (this.personalform.invalid) {
+      this.openDialog();
       return;
     }
     // TODO: save before summit to server js
