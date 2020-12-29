@@ -75,7 +75,7 @@ export class SignUpComponent implements OnInit, OnChanges {
           roomID: result
         }
       }),
-      (error) => console.log(error)
+      (error) => this.openDialog()
     );
 
     /*if (this.personalform.get('doctorOrPatient').value === 0) {
