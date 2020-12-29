@@ -104,6 +104,7 @@ export class ChatRoomComponentsComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log("1");
     this.roomService.leaveRoom({username: this.user, room: this.room, email: this.doctorEmail});
   }
 }

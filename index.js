@@ -64,7 +64,13 @@ app.get('/api/doctorRoomList', (req, res) => {
 });
 
 app.get('/api/userIDForRandom', (req, res) => {
-  res.json(userIDList.pop());
+  try {
+    res.json(userIDList.pop());
+  } catch (e) {
+    console.log(e);
+    res.json("error");
+  }
+
 });
 
 app.post('/api/saveDoctor', jsonParser, (req, res, next) => {
@@ -92,11 +98,11 @@ app.post('/api/doctorValidationForSignIn', jsonParser, (req, res, next) => {
       //Take user room number from list for doctor and route
       res.json(dictForChatRoomAndDoctorRalatedFields[doctor.email]);
     } else {
-      res.json("NoUser");
+      res.json("NotFound");
     }
   } catch (e) {
     console.log(e);
-    res.json("error");
+    res.json("NotFound");
   }
 
 });
@@ -124,66 +130,79 @@ app.post('/api/checkRoomIsActive', jsonParser, (req, res, next) => {
 
 
 io.on("connection", (socket) => {
-  console.log("new connection");
 
   socket.on("join", ({username, room, email}) => {
-    console.log('some arrive' + "username" + username + "room" + room);
+    console.log('some arrive' + "mail" + email + "username" + username + "room" + room);
     //same user name cannot enter
-    const {user} = addUser({id: socket.id, username, room, email});
-    if (email != "-") {
-      activeDoctorListForWiew.push({email: email, numberOfUser: 0})
-    } else {
-      const doctorEmail = getDoctorMailFromRoom(room);
-      const index = activeDoctorListForWiew.findIndex((user2) => {
-        return user2.email === doctorEmail
-      });
-      if (activeDoctorListForWiew[index].numberOfUser === 0) {
-        activeDoctorListForWiew[index].numberOfUser = 1;
+    try {
+      const {user} = addUser({id: socket.id, username, room, email});
+      if (email !== "-") {
+        activeDoctorListForWiew.push({email: email, numberOfUser: 0})
+      } else {
+        const doctorEmail = getDoctorMailFromRoom(room);
+        console.log(doctorEmail);
+        const index = activeDoctorListForWiew.findIndex((user2) => {
+          return user2.email === doctorEmail
+        });
+        console.log("index" + index);
+        if (activeDoctorListForWiew[index].numberOfUser === 0) {
+          activeDoctorListForWiew[index].numberOfUser = 1;
+          console.log("numuser" + activeDoctorListForWiew[index].numberOfUser);
+        }
       }
-    }
-    socket.join(user.room);
-    socket.emit("message", generatemsg("Welcome to Chat Room"));
-    socket.broadcast.to(user.room).emit("message", generatemsg(`${user.username} has joined!`));
-
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUserInRoom(user.room)
-    });
-  });
-
-  socket.on("message", (msg) => {
-    const user = getUser(socket.id);
-    io.to(user.room).emit("message", generatemsg(user.username, msg.message));
-  });
-
-  socket.on("disconnect", () => {
-    const user = removeUser(socket.id);
-    if (user) {
-      io.to(user.room).emit("message", generatemsg(`${user.username} A user  has left`));
+      socket.join(user.room);
+      socket.emit("message", generatemsg("Welcome to Chat Room"));
+      socket.broadcast.to(user.room).emit("message", generatemsg(`${user.username} has joined!`));
 
       io.to(user.room).emit("roomData", {
         room: user.room,
         users: getUserInRoom(user.room)
       });
-      if (user.email !== '-') {
-        const index = activeDoctorListForWiew.findIndex((user2) => {
-          return user2.email === user.email
-        });
-        if (index !== -1) {
-          io.to(user.room).emit("doctor left room", generatemsg("", "doctor left"));
-          return activeDoctorListForWiew.splice(index, 1)[0]
-        }
-      } else {
-        const doctorEmail = getDoctorMailFromRoom(user.room);
-        const index = activeDoctorListForWiew.findIndex((user2) => {
-          return user2.email === doctorEmail
-        });
-        if (activeDoctorListForWiew[index].numberOfUser === 1) {
-          activeDoctorListForWiew[index].numberOfUser = 0;
-        }
-      }
+    } catch (e) {
+      console.log(e);
     }
 
+  });
+
+  socket.on("message", (msg) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit("message", generatemsg(user.username, msg.message));
+
+  });
+
+  socket.on("disconnect", () => {
+    console.log("disconnect");
+    try {
+      const user = removeUser(socket.id);
+      if (user) {
+        io.to(user.room).emit("message", generatemsg(`${user.username} A user  has left`));
+
+        io.to(user.room).emit("roomData", {
+          room: user.room,
+          users: getUserInRoom(user.room)
+        });
+        if (user.email !== '-') {
+          const index = activeDoctorListForWiew.findIndex((user2) => {
+            return user2.email === user.email
+          });
+          if (index !== -1) {
+            console.log("email" + index);
+            io.to(user.room).emit("doctor left room", generatemsg("", "doctor left"));
+            return activeDoctorListForWiew.splice(index, 1)[0]
+          }
+        } else {
+          const doctorEmail = getDoctorMailFromRoom(user.room);
+          const index = activeDoctorListForWiew.findIndex((user2) => {
+            return user2.email === doctorEmail
+          });
+          if (index !== -1 && activeDoctorListForWiew[index].numberOfUser === 1) {
+            activeDoctorListForWiew[index].numberOfUser = 0;
+          }
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
   })
 });
 
@@ -283,6 +302,7 @@ const checkPassword = (password, mail) => {
     return false;
   }
   if (singedDoctorList[indexOfMail]._password === password) {
+    console.log("true");
     return true;
   } else {
     return false;
