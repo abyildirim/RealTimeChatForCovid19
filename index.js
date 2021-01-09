@@ -10,30 +10,36 @@ const PORT = process.env.PORT || 5000;
 var Doctor = require('./Doctor');
 
 const app = express();
-app.use(jsonParser);
-const distDir = __dirname + "/dist/";
-// app.use(express.static(distDir));
-
-//For the production open
-/*app.use(cors({
-  origin: "*",
-  credentials: true
-}));*/
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
-  next();
-});
 const server = http.createServer(app);
-//For the production close
-const io = socketio(server, {
+
+const io = socketio(server);
+
+//For the local opem
+/*const io = socketio(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
     credentials: true
   }
 });
+*/
+app.use(jsonParser);
+const distDir = __dirname + "/dist/";
+//For production
+app.use(express.static(distDir));
+
+//For the production open
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
+//For local usage
+/*app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
+  next();
+});*/
 
 var userIDList = [];
 var roomIdList = [];
