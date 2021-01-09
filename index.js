@@ -65,7 +65,7 @@ app.get('/api/doctorRoomList', (req, res) => {
 
 app.get('/api/userIDForRandom', (req, res) => {
   try {
-    res.json(userIDList.splice(0, 1)[0]);
+    res.json(userIDList.pop());
   } catch (e) {
     console.log(e);
     res.json("error");
@@ -77,7 +77,7 @@ app.post('/api/saveDoctor', jsonParser, (req, res, next) => {
   try {
     const doctor = JSON.parse(req.body.data);
     const tempDoctor = new Doctor(doctor);
-    const roomNumber = roomIdList.splice(0, 1)[0];
+    const roomNumber = roomIdList.pop();
     if(!checkDoctorMailAddress('' + tempDoctor._email)){
       dictForChatRoomAndDoctorRalatedFields['' + tempDoctor._email] = '' + roomNumber;
       singedDoctorList.push(tempDoctor);
@@ -86,7 +86,7 @@ app.post('/api/saveDoctor', jsonParser, (req, res, next) => {
     else{
       res.json("This mail address already exists!")
     }
-
+    
     //Bug not chegking room number same of system of remove all room numbers
   } catch (e) {
     console.log(e);
@@ -336,7 +336,7 @@ for (let i = 0; i < 1000; i++) {
   userIDList.push(i);
 }
 
-for (let i = 6; i < 1000; i++) {
+for (let i = 0; i < 1000; i++) {
   roomIdList.push(i);
 }
 /*

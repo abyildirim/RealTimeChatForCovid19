@@ -25,6 +25,7 @@
 
 .messages-div{
   text-align: left;
+  overflow: scroll;
   height: 500px;
   overflow: auto;
   display: flex;
