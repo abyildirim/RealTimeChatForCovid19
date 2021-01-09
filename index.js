@@ -1,9 +1,9 @@
-const http = require('http')
+const http = require('http');
 const express = require("express");
 const socketio = require('socket.io');
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
-// const cors = require('cors');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 5000;
 
@@ -14,26 +14,13 @@ const server = http.createServer(app);
 
 const io = socketio(server);
 
-//For the local opem
-/*const io = socketio(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-    credentials: true
-  }
-});
-*/
 app.use(jsonParser);
 const distDir = __dirname + "/dist/";
-//For production
 app.use(express.static(distDir));
-
-//For the production open
 app.use(cors({
   origin: "*",
   credentials: true
 }));
-//For local usage
 /*app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
