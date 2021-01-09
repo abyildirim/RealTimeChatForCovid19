@@ -7,9 +7,6 @@ import {DialogElementsExampleDialogComponent, SignUpComponent} from './sign-up-c
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {HttpClientModule} from '@angular/common/http';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -26,8 +23,9 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
 import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 import {ChatRoomComponentsComponent} from './chat-room-components/chat-room-components.component';
-import { SignInComponent } from './sign-in-component/sign-in.component';
+import {DialogForNoPasswordComponent, SignInComponent} from './sign-in-component/sign-in.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -40,6 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomePageComponent,
     ChatRoomComponentsComponent,
     SignInComponent,
+    DialogForNoPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +60,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FlexLayoutModule,
     FormsModule,
     NgbModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

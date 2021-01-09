@@ -19,7 +19,7 @@ export class SignUpComponent implements OnInit, OnChanges {
 
   genders: any = [{name: 'Male', value: 0}, {name: 'Female', value: 1}];
   doctorOrPatient: any = [{name: 'doctor', value: 0}, {name: 'hasta', value: 1}];
-  
+
   doctorArea: any = [
   {name: 'Infectious Disease Physician', value: 'Infectious Disease Physician'},
   {name: 'Dermatologist', value: 'Dermatologist'},
@@ -95,9 +95,9 @@ export class SignUpComponent implements OnInit, OnChanges {
     this.alert_flag = false;
   }
 
-  delay(ms: number) {​​
+  delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }​​
+  }
 
   check_doctor_save_status(result){
     if(result == "This mail address already exists!"){

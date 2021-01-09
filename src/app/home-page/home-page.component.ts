@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -8,15 +8,20 @@ import {Router} from '@angular/router';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit(): void {
+
   }
+
   routeDoctor(): void {
     this.router.navigate(['doctor/registration']);
   }
+
   routePatient(): void {
     this.router.navigate(['patient/doctor-selection']);
   }
+
 
 }

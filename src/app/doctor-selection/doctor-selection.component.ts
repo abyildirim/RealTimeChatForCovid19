@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ChatRoomService} from '../services/chat-room.service';
 import {Router} from '@angular/router';
 import {DoctorRoomService} from '../services/covid.service';
@@ -8,14 +8,19 @@ import {DoctorRoomService} from '../services/covid.service';
   templateUrl: './doctor-selection.component.html',
   styleUrls: ['./doctor-selection.component.css']
 })
-export class DoctorSelectionComponent implements OnInit {
+export class DoctorSelectionComponent implements OnInit, OnDestroy {
   userID: any;
   allRooms: any;
+  audio;
 
   constructor(private router: Router, private doctorRoomService: DoctorRoomService) {
   }
 
   ngOnInit(): void {
+    this.audio = new Audio('../../assets/audio/information.mp3');
+    this.audio.load();
+    this.audio.play();
+
     this.doctorRoomService.getAllDoctorRooms().subscribe(
       (result) => {
         this.allRooms = result;
@@ -45,6 +50,10 @@ export class DoctorSelectionComponent implements OnInit {
 
   gotoChatRoom(user: string, room: string): void {
     this.router.navigate(['/chatroom'], {queryParams: {email: '-', userId: this.userID, roomID: room}});
+  }
+
+  ngOnDestroy(): void {
+    this.audio.pause();
   }
 }
 

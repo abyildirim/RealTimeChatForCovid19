@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import {Subscription} from 'rxjs';
 import {DoctorRoomService} from '../services/covid.service';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class SignInComponent implements OnInit, OnChanges {
   });
 
   alert_flag: Boolean = false;
-  
+
   private subscription = new Subscription();
 
 
@@ -62,9 +63,9 @@ export class SignInComponent implements OnInit, OnChanges {
     this.alert_flag = false;
   }
 
-  delay(ms: number) {​​
+  delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }​​
+  }
 
   // tslint:disable-next-line:typedef
   checkSignInResponse(value) {
