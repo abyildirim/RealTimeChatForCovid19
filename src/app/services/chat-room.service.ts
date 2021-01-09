@@ -21,7 +21,7 @@ export class ChatRoomService {
   }
 
   socketConnect() {
-    this.socket = io(this.Socket_PORT_ForLOCAL);
+    this.socket = io(this.SOCKET_ENDPOINT);
   }
 
   // tslint:disable-next-line:typedef
