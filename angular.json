@@ -126,5 +126,8 @@
       }
     }
   },
-  "defaultProject": "covid19-information-and-question-system"
+  "defaultProject": "covid19-information-and-question-system",
+  "cli": {
+    "analytics": false
+  }
 }

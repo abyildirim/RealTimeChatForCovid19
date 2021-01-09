@@ -1,6 +1,7 @@
-import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import {Subscription} from 'rxjs';
 import {DoctorRoomService} from '../services/covid.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -17,12 +18,16 @@ export class SignInComponent implements OnInit, OnChanges {
     email: ['', Validators.required],
   });
 
+  alert_flag: Boolean = false;
+
   private subscription = new Subscription();
+
 
   onChange: any = (_: SignInForm) => {
   }
 
-  constructor(private fb: FormBuilder, private service: DoctorRoomService, private router: Router, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private service: DoctorRoomService, private router: Router, alertConfig: NgbAlertConfig) {
+    alertConfig.type = 'danger';
   }
 
   ngOnChanges(simpleChanges: SimpleChanges): void {
@@ -40,16 +45,26 @@ export class SignInComponent implements OnInit, OnChanges {
   }
 
   // tslint:disable-next-line:typedef
-  saveForm() {
+  async saveForm() {
     if (this.signInForm.invalid) {
-      this.openDialog();
+      this.show_alert();
       return;
     }
 
     this.service.doctorValidationForSignIn(this.signInForm.getRawValue()).subscribe(
       (result) => this.checkSignInResponse(result),
-      (error) => this.openDialog()
+      (error) => console.log(error)
     );
+  }
+
+  async show_alert(){
+    this.alert_flag = true;
+    await this.delay(5000);
+    this.alert_flag = false;
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   // tslint:disable-next-line:typedef
@@ -62,26 +77,14 @@ export class SignInComponent implements OnInit, OnChanges {
           roomID: value
         }
       });
-    } else {
-      this.openDialog();
     }
-  }
-
-  openDialog(): void {
-    this.dialog.open(DialogForNoPasswordComponent);
-  }
+    this.show_alert();
+    console.log(value);
+  };
 }
 
 export interface SignInForm {
   firstName: string;
   lastName: string;
   email: string;
-}
-
-@Component({
-  selector: 'app-dialog-for-no-password-dialog',
-  templateUrl: 'dialog-for-no-password-dialog.html',
-})
-export class DialogForNoPasswordComponent {
-
 }

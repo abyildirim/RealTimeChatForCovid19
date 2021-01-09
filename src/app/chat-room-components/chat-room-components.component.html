@@ -1,5 +1,4 @@
 <div *ngIf="connectedServer">
-
   <img class = "background-img" src="assets/img/home-bg.png">
   <div class="container-body">
     <p class="header">Chat Room of {{this.user=="-" ? 'Doctor' : "Patient ("+this.user+")"}}</p>
@@ -17,8 +16,12 @@
     </div>
   </div>
 </div>
+
 <div *ngIf="!connectedServer">
-  <h1>Doctor left the room!</h1>
-  <h1>Please click button and try again</h1>
-  <button type="button" class="btn btn-success pull-right submit-btn" (click)="gotoHome()"> GotoHome</button>
+  <img class = "background-img" src="assets/img/home-bg.png">
+  <div class="container-body">
+    <h1  class="header">{{this.user=="-" ? 'Patient' : "Doctor"}} Left the Room!</h1>
+    <button type="button" class="btn btn-md btn-outline-danger leave-button" (click)="gotoHome()"> Home Page</button>
+  </div>
 </div>
+

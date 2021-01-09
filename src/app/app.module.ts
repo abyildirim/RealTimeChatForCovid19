@@ -23,7 +23,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { DoctorSelectionComponent } from './doctor-selection/doctor-selection.component';
 import { DoctorRegistrationComponent } from './doctor-registration/doctor-registration.component';
 import {ChatRoomComponentsComponent} from './chat-room-components/chat-room-components.component';
-import {DialogForNoPasswordComponent, SignInComponent} from './sign-in-component/sign-in.component';
+import { SignInComponent} from './sign-in-component/sign-in.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -38,7 +38,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     HomePageComponent,
     ChatRoomComponentsComponent,
     SignInComponent,
-    DialogForNoPasswordComponent
   ],
   imports: [
     BrowserModule,
