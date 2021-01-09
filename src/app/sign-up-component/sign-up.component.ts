@@ -1,10 +1,10 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {HttpResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DoctorRoomService} from '../services/covid.service';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-well-come-page',
@@ -13,15 +13,24 @@ import {DoctorRoomService} from '../services/covid.service';
 })
 export class SignUpComponent implements OnInit, OnChanges {
 
+  alert_message: String = "";
+  alert_flag: Boolean = false;
   submitted = false;
 
-  genders: any = [{name: 'male', value: 0}, {name: 'female', value: 1}];
+  genders: any = [{name: 'Male', value: 0}, {name: 'Female', value: 1}];
   doctorOrPatient: any = [{name: 'doctor', value: 0}, {name: 'hasta', value: 1}];
-  doctorArea: any = [{name: 'dahiliye', value: 'iç hastalıkları'}];
+  
+  doctorArea: any = [
+  {name: 'Infectious Disease Physician', value: 'Infectious Disease Physician'},
+  {name: 'Dermatologist', value: 'Dermatologist'},
+  {name: 'Neurologist', value: 'Neurologist'},
+  {name: 'Cardiologist', value: 'Cardiologist'},
+  {name: 'Psychiatrist', value: 'Psychiatrist'}];
+
   personalform = this.fb.group({
     name: ['', Validators.required],
     surname: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', Validators.email],
     age: ['', Validators.required],
     phonenumber: ['', Validators.required],
     birthdate: ['', Validators.required],
@@ -38,7 +47,8 @@ export class SignUpComponent implements OnInit, OnChanges {
   }
 
 
-  constructor(private fb: FormBuilder, private router: Router, public dialog: MatDialog, private service: DoctorRoomService) {
+  constructor(private fb: FormBuilder, private router: Router, public dialog: MatDialog, private service: DoctorRoomService, alertConfig: NgbAlertConfig) {
+    alertConfig.type = 'danger';
   }
 
   ngOnInit(): void {
@@ -56,8 +66,9 @@ export class SignUpComponent implements OnInit, OnChanges {
   }
 
   saveForm(): void {
-    console.log('submitted');
     if (this.personalform.invalid) {
+      this.alert_message = "Required fields are invalid!"
+      this.show_alert()
       return;
     }
     // TODO: save before summit to server js
@@ -67,13 +78,7 @@ export class SignUpComponent implements OnInit, OnChanges {
     );*/
 
     this.service.saveDoctorToSystem(this.personalform.getRawValue()).subscribe(
-      (result) => this.router.navigate(['/chatroom'], {
-        queryParams: {
-          email: this.personalform.get('email'),
-          userId: this.personalform.get('name').value + ' ' + this.personalform.get('surname').value,
-          roomID: result
-        }
-      }),
+      (result) => this.check_doctor_save_status(result),
       (error) => console.log(error)
     );
 
@@ -82,6 +87,26 @@ export class SignUpComponent implements OnInit, OnChanges {
     } else if (this.personalform.get('doctorOrPatient').value === 1) {
       this.router.navigate(['/hasta']);
     }*/
+  }
+
+  async show_alert(){
+    this.alert_flag = true;
+    await this.delay(5000);
+    this.alert_flag = false;
+  }
+
+  delay(ms: number) {​​
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }​​
+
+  check_doctor_save_status(result){
+    if(result == "This mail address already exists!"){
+      this.alert_message = "This mail is already in use!"
+      this.show_alert()
+    }
+    else{
+      this.router.navigate(['/'])
+    }
   }
 
   openDialog(): void {

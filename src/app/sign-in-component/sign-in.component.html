@@ -1,5 +1,13 @@
 <img class="background-img" src="assets/img/home-bg.png">
 <div class="container-body">
+  
+  <p *ngIf="alert_flag">
+    <ngb-alert>
+      Email or password is invalid!
+    </ngb-alert>
+  </p>
+
+
   <p class="header">Sign-In</p>
   <div class="row justify-content-md-center general-container">
     <div class="col-md-6 form-div ">
@@ -15,7 +23,7 @@
             <div class="label">
               Password:
             </div>
-            <input class="form-input" type="text" formControlName="password"/>
+            <input class="form-input" type="password" formControlName="password"/>
           </div>
         </div>
         <br>

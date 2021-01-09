@@ -78,10 +78,15 @@ app.post('/api/saveDoctor', jsonParser, (req, res, next) => {
     const doctor = JSON.parse(req.body.data);
     const tempDoctor = new Doctor(doctor);
     const roomNumber = roomIdList.pop();
-    activeDoctorListForWiew.push({email: '' + tempDoctor._email, numberOfUser: 0});
-    dictForChatRoomAndDoctorRalatedFields[tempDoctor._email] = '' + roomNumber;
-    singedDoctorList.push(tempDoctor);
-    res.json(roomNumber);
+    if(!checkDoctorMailAddress('' + tempDoctor._email)){
+      dictForChatRoomAndDoctorRalatedFields['' + tempDoctor._email] = '' + roomNumber;
+      singedDoctorList.push(tempDoctor);
+      res.json(roomNumber);
+    }
+    else{
+      res.json("This mail address already exists!")
+    }
+    
     //Bug not chegking room number same of system of remove all room numbers
   } catch (e) {
     console.log(e);

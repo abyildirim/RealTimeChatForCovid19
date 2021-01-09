@@ -1,6 +1,7 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import {Subscription} from 'rxjs';
 import {DoctorRoomService} from '../services/covid.service';
 
@@ -16,12 +17,16 @@ export class SignInComponent implements OnInit, OnChanges {
     email: ['', Validators.required],
   });
 
+  alert_flag: Boolean = false;
+  
   private subscription = new Subscription();
+
 
   onChange: any = (_: SignInForm) => {
   }
 
-  constructor(private fb: FormBuilder, private service: DoctorRoomService, private router: Router) {
+  constructor(private fb: FormBuilder, private service: DoctorRoomService, private router: Router, alertConfig: NgbAlertConfig) {
+    alertConfig.type = 'danger';
   }
 
   ngOnChanges(simpleChanges: SimpleChanges): void {
@@ -39,8 +44,9 @@ export class SignInComponent implements OnInit, OnChanges {
   }
 
   // tslint:disable-next-line:typedef
-  saveForm() {
+  async saveForm() {
     if (this.signInForm.invalid) {
+      this.show_alert();
       return;
     }
 
@@ -49,6 +55,16 @@ export class SignInComponent implements OnInit, OnChanges {
       (error) => console.log(error)
     );
   }
+
+  async show_alert(){
+    this.alert_flag = true;
+    await this.delay(5000);
+    this.alert_flag = false;
+  }
+
+  delay(ms: number) {​​
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }​​
 
   // tslint:disable-next-line:typedef
   checkSignInResponse(value) {
@@ -61,6 +77,7 @@ export class SignInComponent implements OnInit, OnChanges {
         }
       });
     }
+    this.show_alert();
     console.log(value);
   };
 }

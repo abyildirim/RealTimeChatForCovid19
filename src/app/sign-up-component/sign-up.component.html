@@ -1,103 +1,83 @@
-<div class="desktopSettings">
-  <div class="topPart" fxLayout="row" fxLayoutAlign="center">
-    <div>
-      <mat-card class="card-container">Covid 19 Home Page Name</mat-card>
-    </div>
-  </div>
-
-  <div class="middleSection">
-    <div class="content">
+<img class="background-img" src="assets/img/home-bg.png">
+<div class="container-body">
+  <p class="header">Sign-Up</p>
+  <div class="row justify-content-md-center general-container">
+    <div class="col-md-6 form-div ">
       <form [formGroup]="personalform" (ngSubmit)="saveForm()" appearance="standard">
-        <mat-form-field>
-          <div class="">
-
-            <mat-label>
+        <div class="row justify-content-md-center">
+          <div class="col-md-12">
+            <div class="label">
               FirstName:
-              <label>
-                <input matInput type="text" formControlName="name"/>
-              </label>
-            </mat-label>
+            </div>
+            <input class="form-input" type="text" formControlName="name"/>
           </div>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <div class="">
-            <mat-label>
+          <div class="col-md-12">
+            <div class="label">
               LastName:
-              <input matInput type="text" formControlName="surname">
-            </mat-label>
+            </div>
+            <input class="form-input" type="text" formControlName="surname">
           </div>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <div class="">
-            <mat-label>
+          <div class="col-md-12">
+            <div class="label">
               Email:
-              <input matInput type="text" formControlName="email">
-            </mat-label>
+            </div>
+            <input class="form-input" type="email" formControlName="email">
           </div>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <div class="">
-            <mat-label>
+          <div class="col-md-12">
+            <div class="label">
               Password:
-              <input matInput type="text" formControlName="password">
-            </mat-label>
+            </div>
+            <input class="form-input" type="password" formControlName="password">
           </div>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <div class="">
-            <mat-label>
+          <div class="col-md-12">
+            <div class="label">
               Age:
-              <input matInput type="text" formControlName="age">
-            </mat-label>
+            </div>
+            <input class="form-input" type="number" min=20 max=100 formControlName="age">
           </div>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <div class="">
-            <mat-label>
+          <div class="col-md-12">
+            <div class="label">
               Phonenumber:
-              <input matInput type="text" formControlName="phonenumber">
-            </mat-label>
+            </div>
+            <input class="form-input" type="text" formControlName="phonenumber">
           </div>
-        </mat-form-field>
-        <br>
-        <div>
-          <mat-form-field appearance="fill">
-            <mat-label>Gender</mat-label>
-            <mat-select matInput formControlName="gender">
-              <mat-option *ngFor="let gender of genders" [value]="gender.value">
+          <div class="col-md-12">
+            <div class="label">
+              Gender:
+            </div>
+            <select class="form-input" formControlName="gender">
+              <option class="form-option" *ngFor="let gender of genders" [value]="gender.value">
                 {{gender.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <br>
-        <div>
-          <mat-form-field appearance="fill">
-            <mat-label>Area of Doctor</mat-label>
-            <mat-select matInput formControlName="doctorArea">
-              <mat-option *ngFor="let dp of doctorArea" [value]="dp.value">
+              </option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <div class="label">
+              Specialty of Doctor:
+            </div>
+            <select class="form-input" formControlName="doctorArea">
+              <option class="form-option" *ngFor="let dp of doctorArea" [value]="dp.value">
                 {{dp.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+              </option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <div class="label">
+              Birth date:
+            </div>
+            <input class="form-input form-datepicker" formControlName="birthdate" placeholder="Pick a date" [matDatepicker]="birthdate">
+            <mat-datepicker-toggle class="form-datepicker-toggle" matSuffix [for]="birthdate"></mat-datepicker-toggle>
+            <mat-datepicker #birthdate></mat-datepicker>
+          </div>
         </div>
         <br>
-        <mat-form-field appearance="fill">
-          <mat-label>Birth date</mat-label>
-          <input matInput formControlName="birthdate" placeholder="Pick a date" [matDatepicker]="birthdate">
-          <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
-          <mat-datepicker #birthdate></mat-datepicker>
-        </mat-form-field>
-        <br>
-        <mat-card-actions>
-          <button mat-raised-button type="submit" [disabled]="formDisabled()">Submit</button>
-        </mat-card-actions>
+        <button class="btn sign-button" type="submit" [disabled]="formDisabled()">Submit</button>
       </form>
+      <p class="alert-div" *ngIf="alert_flag">
+        <ngb-alert>
+          {{alert_message}}
+        </ngb-alert>
+      </p>
     </div>
   </div>
 </div>
