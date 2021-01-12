@@ -177,7 +177,7 @@ io.on("connection", (socket) => {
     try {
       const user = removeUser(socket.id);
       if (user) {
-        io.to(user.room).emit("message", generatemsg(`Patient ${user.username} has left the room `));
+        io.to(user.room).emit("message", generatemsg(`${user.username} has left the room `));
 
         io.to(user.room).emit("roomData", {
           room: user.room,
