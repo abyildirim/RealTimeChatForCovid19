@@ -1682,7 +1682,7 @@
         selectors: [["app-root"]],
         decls: 3,
         vars: 0,
-        consts: [[1, "btn", "btn-success", "home-page-button", 3, "click"]],
+        consts: [[1, "btn", "btn-success", "home-page-button", 3, "click"], [1, "fa", "fa-home", "fa-2x"]],
         template: function AppComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 0);
@@ -1691,7 +1691,7 @@
               return ctx.routeHomePage();
             });
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Home Page");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "i", 1);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 

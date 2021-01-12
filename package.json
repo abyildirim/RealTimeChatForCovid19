@@ -1,6 +1,6 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.0.0",
+  "name": "covid-19-information-and-question-system",
+  "version": "1.0.0",
   "description": "A sample Node.js app using Express 4",
   "scripts": {
     "ng": "ng",
@@ -66,7 +66,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/nezihsunman/RealTimeChatForCovid19"
   },
   "license": "MIT"
 }
