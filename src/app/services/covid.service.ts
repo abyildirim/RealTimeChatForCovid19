@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class DoctorRoomService {
-  private baseURL = 'https://cs447covidchatservice.herokuapp.com/api/';
+  private baseURL = 'https://cs447covidchatapplication.herokuapp.com/api/';
   private baseURL2 = 'http://localhost:5000/api/';
   private endpoint = this.baseURL + 'doctorRoomList';
   private endpointForUserID = this.baseURL + 'userIDForRandom';

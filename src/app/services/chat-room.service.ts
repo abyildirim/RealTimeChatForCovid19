@@ -4,7 +4,7 @@ import {io} from 'socket.io-client';
 
 @Injectable()
 export class ChatRoomService {
-  private SOCKET_ENDPOINT = 'https://cs447covidchatservice.herokuapp.com/';
+  private SOCKET_ENDPOINT = 'https://cs447covidchatapplication.herokuapp.com/';
   private Socket_PORT_ForLOCAL = 'http://localhost:5000';
   private socket; // io('http://localhost:3000/rooms');
 
