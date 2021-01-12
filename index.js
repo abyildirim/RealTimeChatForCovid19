@@ -39,12 +39,9 @@ var users = []; //Active user for patient
 const activeDoctorListForWiew = [];
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
-=======
->>>>>>> parent of 76d4db5... adding
 =======
 >>>>>>> parent of 76d4db5... adding
 
@@ -183,11 +180,7 @@ io.on("connection", (socket) => {
       const user = removeUser(socket.id);
       if (user) {
 <<<<<<< HEAD
-<<<<<<< HEAD
         io.to(user.room).emit("message", generatemsg(`${user.username} has left the room `));
-=======
-        io.to(user.room).emit("message", generatemsg(`${user.username} A user  has left`));
->>>>>>> parent of 76d4db5... adding
 =======
         io.to(user.room).emit("message", generatemsg(`${user.username} A user  has left`));
 >>>>>>> parent of 76d4db5... adding
