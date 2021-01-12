@@ -4,6 +4,7 @@ const socketio = require('socket.io');
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 const cors = require('cors');
+const CryptoJS = require('crypto-js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -71,12 +72,11 @@ app.post('/api/saveDoctor', jsonParser, (req, res, next) => {
     const doctor = JSON.parse(req.body.data);
     const tempDoctor = new Doctor(doctor);
     const roomNumber = roomIdList.splice(0, 1)[0];
-    if(!checkDoctorMailAddress('' + tempDoctor._email)){
+    if (!checkDoctorMailAddress('' + tempDoctor._email)) {
       dictForChatRoomAndDoctorRalatedFields['' + tempDoctor._email] = '' + roomNumber;
       singedDoctorList.push(tempDoctor);
       res.json(roomNumber);
-    }
-    else{
+    } else {
       res.json("This mail address already exists!")
     }
 
@@ -163,11 +163,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("message", (msg) => {
+    const message = decryptData(msg);
     const user = getUser(socket.id);
-    io.to(user.room).emit("message", generatemsg(user.username, msg.message));
+    io.to(user.room).emit("message", generatemsg(user.username, message.message));
 
   });
-
   socket.on("disconnect", () => {
     console.log("disconnect");
     try {
@@ -269,14 +269,24 @@ const getDoctorMailFromRoom = (room) => {
   }
 
 };
-
 const generatemsg = (username, text) => {
-  return {
+  return CryptoJS.AES.encrypt(JSON.stringify({
     username: username,
     text: text,
     createdAt: new Date().getTime()
-  }
+  }), '123456').toString();
 };
+
+const decryptData = (data) => {
+  try {
+    const bytes = CryptoJS.AES.decrypt(data, '123456');
+    if (bytes.toString()) {
+      return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    }
+    return data;
+  } catch (e) {
+  }
+}
 
 const checkDoctorMailAddress = (email) => {
   const indexOfMail = singedDoctorList.findIndex((Doctor) => {

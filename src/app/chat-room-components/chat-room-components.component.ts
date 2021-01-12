@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ChatRoomService} from '../services/chat-room.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DoctorRoomService} from '../services/covid.service';
+import {EncryptService} from '../services/encrypt.service';
 
 @Component({
   selector: 'app-chat-room-components',
@@ -19,7 +20,7 @@ export class ChatRoomComponentsComponent implements OnDestroy {
   doctorOrNot = false;
 
   constructor(private roomService: ChatRoomService, private route: ActivatedRoute,
-              private service: DoctorRoomService, private router: Router) {
+              private service: DoctorRoomService, private router: Router, private encryptService: EncryptService) {
     this.messageText = '';
     this.doctorEmail = this.route.snapshot.queryParamMap.get('email');
     this.user = this.route.snapshot.queryParamMap.get('userId');
@@ -53,10 +54,10 @@ export class ChatRoomComponentsComponent implements OnDestroy {
         .subscribe(data => this.messageArray.push(data));*/
 
       this.roomService.doctorLeftRoom()
-        .subscribe(data => this.checkDoctorIsLeft(data));
+        .subscribe(data => this.checkDoctorIsLeft(this.encryptService.decryptData(data)));
 
       this.roomService.takenNewMessageFromOtherUsers()
-        .subscribe(data => this.messageArray.push(data));
+        .subscribe(data => this.messageArray.push(this.encryptService.decryptData(data)));
 
       this.join();
     } else {
@@ -79,12 +80,12 @@ export class ChatRoomComponentsComponent implements OnDestroy {
   sendMessage() {
     console.log(this.messageText);
     if (this.messageText !== '') {
-      this.roomService.sendMessageToAllUsers({
+      this.roomService.sendMessageToAllUsers(this.encryptService.encryptData({
         username: this.user,
         room: this.room,
         email: this.doctorEmail,
         message: this.messageText
-      });
+      }));
       this.messageText = '';
     }
   }
