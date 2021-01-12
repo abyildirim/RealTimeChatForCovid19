@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 const cors = require('cors');
 const CryptoJS = require('crypto-js');
+const path = require('path');
 
 const PORT = process.env.PORT || 5000;
 
@@ -38,6 +39,9 @@ var users = []; //Active user for patient
 
 const activeDoctorListForWiew = [];
 
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 app.get('/api/doctorRoomList', (req, res) => {
   var response = [];
@@ -173,7 +177,7 @@ io.on("connection", (socket) => {
     try {
       const user = removeUser(socket.id);
       if (user) {
-        io.to(user.room).emit("message", generatemsg(`${user.username} A user  has left`));
+        io.to(user.room).emit("message", generatemsg(`Patient ${user.username} has left the room `));
 
         io.to(user.room).emit("roomData", {
           room: user.room,
@@ -206,7 +210,7 @@ io.on("connection", (socket) => {
 
 
 const newuser = [];
-const addUser = ({id, username, room, email}) => {
+const addUser = ({id, username, room, email, privateKey}) => {
   //clean the data
 
   username = username.toLowerCase();
@@ -231,7 +235,7 @@ const addUser = ({id, username, room, email}) => {
   }
 
   //store user
-  const user = {id, username, room, email};
+  const user = {id, username, room, email, privateKey};
   users.push(user);
   return {user}
 };
