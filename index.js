@@ -358,7 +358,7 @@ let DoctorNezih = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye",
+  doctorArea: "Infectious Disease Physician",
   password: "123456"
 });
 dictForChatRoomAndDoctorRalatedFields[DoctorNezih._email] = '1';
@@ -370,7 +370,7 @@ let DoctorEce = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "female",
-  doctorArea: "Dahiliye",
+  doctorArea: "Cardiologist",
   password: "123456"
 });
 dictForChatRoomAndDoctorRalatedFields[DoctorEce._email] = '2';
@@ -382,7 +382,7 @@ let DoctorBurak = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye",
+  doctorArea: "Psychiatrist",
   password: "123456"
 });
 dictForChatRoomAndDoctorRalatedFields[DoctorBurak._email] = '3';
@@ -395,7 +395,7 @@ let DoctorNadir = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye",
+  doctorArea: "Neurologist",
   password: "123456"
 });
 dictForChatRoomAndDoctorRalatedFields[DoctorNadir._email] = '4';
@@ -408,7 +408,7 @@ let DoctorEcem = new Doctor({
   phonenumber: "53325981",
   birthdate: "17.06",
   gender: "male",
-  doctorArea: "Dahiliye",
+  doctorArea: "Dermatologist",
   password: "123456"
 });
 dictForChatRoomAndDoctorRalatedFields[DoctorEcem._email] = '5';
